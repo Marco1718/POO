@@ -6,4 +6,19 @@ public class CLI {
         System.out.println("1. Muestra carro");
         System.out.println("2. Agrega carros");
     }
+
+    public void ShowMessage(String message) {
+        System.out.println(message);
+    }
+
+    public void ShowError(String message) {
+        System.out.println("Error: "+message);
+    }
+
+    public void ShowCars(String[] cars) {
+        for (String car : cars){
+            System.out.println(car);
+        }
+    }    
+
 }
