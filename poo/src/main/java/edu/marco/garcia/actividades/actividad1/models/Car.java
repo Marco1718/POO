@@ -23,6 +23,7 @@ public class Car {
         setEstereo(estereo);
 
     }
+
     /**
      * @return Retorna el tipo de estereo del carro, entre 1 y 5
      */
@@ -35,7 +36,7 @@ public class Car {
 
     public void setEstereo(int estereo) {
         if(estereo<1 || estereo>5){
-            throw new IllegalArgumentException("tipo de estereo esta entre 1 y 5");
+            throw new IllegalArgumentException("Tipo de estereo esta entre 1 y 5");
         }
 
         this.estereo = estereo;
@@ -57,9 +58,7 @@ public class Car {
         this.marca = marca;
     }
 
-    public String getColor() {
-        return color;
-    }
+    public String getColor() {return color;}
 
     public void setColor(String color) {
         this.color = color;

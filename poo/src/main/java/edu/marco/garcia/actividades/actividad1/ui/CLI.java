@@ -6,7 +6,7 @@ import edu.marco.garcia.actividades.actividad1.models.Car;
 import edu.marco.garcia.actividades.actividad1.process.StockManager;
 
 /**
- * @param scanner este retiene la información sobre el carro
+ * @param scanner en este retiene la información sobre el carro
  */
 public class CLI {
     public static void runApp(){
