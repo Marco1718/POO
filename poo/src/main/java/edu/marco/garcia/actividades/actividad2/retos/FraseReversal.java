@@ -2,15 +2,23 @@ package edu.marco.garcia.actividades.actividad2.retos;
 
 public class FraseReversal {
 
-        public static String reverseFrase(String myString) {
-            if (myString == null)
-              return null;
-
-            return new StringBuilder(myString).reverse().toString();
+    public static String reverseFrase(String myString) {
+        if (myString == null) {
+            return null;
         }
 
-        public static void main(String[] args) {
-            String myString1 = "Hello World!!";
-            System.out.println("Reverse:\n" + myString1 + "\n"+reverseFrase(myString1));
+        char[] charArray = myString.toCharArray();
+        String stringReverse = "";
+
+        for (int i = charArray.length -1; i >=0; i--){
+            stringReverse += charArray[i];
         }
+
+        return stringReverse;
+    }
+
+    public static void main(String[] args) {
+        String myString1 = "Hello World!!";
+        System.out.println("Reverse:\n" + myString1 + "\n"+reverseFrase(myString1));
+    }    
 }
