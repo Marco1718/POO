@@ -13,7 +13,7 @@ public class StockManager {
     }
     
     /**
-     * @param modelo El año fabricación del carro
+     * @param modelo El año fabricación del auto
      * @param marca La marca del carro
      * @param estereo El tipo de estereo del carro (1-5)
      * @param color El color del carro (Gris, Blanco, Negro y Rojo)
