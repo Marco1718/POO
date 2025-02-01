@@ -2,6 +2,9 @@ package edu.marco.garcia.actividades.actividad3.models;
 
 public class Colors {
 
+/**
+ * Se le establece el color de la consola según el valor indicado en el código
+ */
     public static final String RESET = "\u001B[0m";
     public static final String ROJO = "\u001B[31m";
     public static final String VERDE = "\u001B[32m";

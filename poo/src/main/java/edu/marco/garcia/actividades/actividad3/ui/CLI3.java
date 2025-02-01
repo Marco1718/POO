@@ -13,8 +13,13 @@ import static edu.marco.garcia.actividades.actividad3.models.Colors.VERDE;
 import edu.marco.garcia.actividades.actividad3.models.Products;
 
 public class CLI3 {
+/**
+ * Lista donde se almacenará todo el stock
+ */
     private static ArrayList<Products> stock = new ArrayList<>();
-
+/**
+ * Se muestra el menú de opciones para la gestión de productos en el stock
+ */
     public static void showMenu() {
         Scanner sc = new Scanner(System.in);
         int opcion;
@@ -44,14 +49,16 @@ public class CLI3 {
 
         sc.close();
     }
-
-    // Consultar el precio de un producto
+/**
+ * Genera el precio de un producto registrado con base al porcentaje de utilidad deseado
+ * @param sc el scanner para la entrada de datos por parte del usuario
+ */
     private static void consultarPrecio(Scanner sc) {
         if (stock.isEmpty()) {
             System.out.println(AMARILLO + "No hay productos registrados en el stock"+ RESET);
             return;
         }
-        System.out.println(MAGENTA + "\nIngrese el código del producto que desea consultar: " + RESET);
+        System.out.println(MAGENTA + "\nIngresa el código del producto que desea consultar: " + RESET);
         String codigo = sc.nextLine();
         Products productoEncontrado = null;
 
@@ -63,7 +70,7 @@ public class CLI3 {
         }
 
         if (productoEncontrado != null) {
-            System.out.println("Ingrese el porcentaje de utilidad: ");
+            System.out.println("Ingresa el porcentaje de utilidad: ");
             try {
                 Double utilidad = Double.valueOf(sc.nextLine());
                 System.out.println("Precio de venta: " + productoEncontrado.calcularPrecio(utilidad));
@@ -74,11 +81,13 @@ public class CLI3 {
             System.out.println(AMARILLO + "No se reconoce el producto" + RESET);
         }
     }
-
-    // Agregar un producto al stock
+/**
+ * Agrega nuevos productos al stock
+ * @param sc Scanner para entrada de datos
+ */
     private static void agregarProducto(Scanner sc) {
         Products nuevoProducto = new Products();
-        System.out.println("\nIngrese los detalles del producto:");
+        System.out.println("\nIngresa los detalles del producto:");
         System.out.print("Código: ");
         nuevoProducto.setCodigo(sc.nextLine());
         System.out.print("Tipo: ");
@@ -94,8 +103,9 @@ public class CLI3 {
         stock.add(nuevoProducto);
         System.out.println(VERDE + "\nProducto agregado al stock" + RESET);
     }
-
-    // Mostrar el stock de la tienda
+/**
+ * Muestra la lista del stock registrado
+ */
     private static void mostrarStock() {
         if (stock.isEmpty()) {
             System.out.println(AMARILLO + "No hay productos en el stock"+ RESET);
@@ -106,8 +116,10 @@ public class CLI3 {
             }
         }
     }
-
-    // Comparar dos productos almacenados
+/**
+ * Compara 2 productos según el porcentaje de utilidad deseado
+ * @param sc Scanner para registro de datos
+ */
     private static void compararProductos(Scanner sc) {
         if (stock.size() < 2) {
             System.out.println(AMARILLO + "No hay suficientes productos para comparar" + RESET);
