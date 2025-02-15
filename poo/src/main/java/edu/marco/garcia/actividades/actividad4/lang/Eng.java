@@ -10,17 +10,27 @@ public class Eng extends Lang{
         GOODBYE = "Goodbye!";
         LANGUAGE_MENU_TOP = "\n╔══════════════════════════════════════════════╗\n║   Your system language is : ";
         LANGUAGE_MENU_BOTTOM = "           ║\n║   Would you like to change the language?     ║\n╠══════════════════════════════════════════════╣\n║                  1. Spanish                  ║\n║                  2. English                  ║\n║                  3. Exit                     ║\n╚══════════════════════════════════════════════╝";
-        SHOW_MENU = "+------------------------------------------+\n" +
-        "|            Main Menu                    |\n" +
-        "+------------------------------------------+\n" +
-        "| 1. Add a student                        |\n" +
-        "| 2. Add a professor                      |\n" +
-        "| 3. Create a course                      |\n" +
-        "| 4. Show hired professors                |\n" +
-        "| 5. Show enrolled students               |\n" +
-        "| 6. Show current courses                 |\n" +
-        "| 7. Exit                                 |\n" +
-        "+------------------------------------------+";
+        SHOW_MENU =        
+        "+----------------------------------------------------+\n" +
+        "|            Main Menu                               |\n" +
+        "+----------------------------------------------------+\n" +
+        "| 1. Register a student                              |\n" +
+        "| 2. Register a teacher                              |\n" +
+        "| 3. Create an empty course                          |\n" +
+        "| 4. Create subjects for a course                    |\n" +
+        "| 5. Assign a student to a course                    |\n" +
+        "| 6. Assign subjects to an empty course              |\n" +
+        "| 7. Show students enrolled in a course              |\n" +
+        "| 8. Show teachers of a course                       |\n" +
+        "| 9. Records of created courses                      |\n" +
+        "| 10. Records of enrolled students                   |\n" +
+        "| 11. Records of hired teachers                      |\n" +
+        "| 12. Records of taught subjects                     |\n" +
+        "| 13. Calculate a teacher's salary                   |\n" +
+        "| 14. Calculate hours and credits of a course        |\n" +
+        "| 15. Exit                                           |\n" +
+        "+----------------------------------------------------+";
+ 
         STUDENT_NAME = "Student's name: ";
         STUDENT_NAME_HEADLINER = "╔════════════════════════╗\n" +
                                "║   Enter Student name   ║\n" +
@@ -30,14 +40,19 @@ public class Eng extends Lang{
                              "║  Enter Student ID ║\n" +
                              "╚═══════════════════╝";
         STUDENT_AGE = "Student's age: ";
-        STUDENT_ENROLLMENT_HEADLINER = "╔════════════════════╗\n" +
-                                     "║  Enter Student age ║\n" +
-                                     "╚════════════════════╝";
+        STUDENT_AGE_HEADLINER =
+        "╔═════════════════════╗\n" +
+        "║  Enter Student age  ║\n" +
+        "╚═════════════════════╝";
+
         STUDENT_ENROLLMENT = "Student's enrollment: ";
         STUDENT_ENROLLMENT_HEADLINER = "╔══════════════════════════════════════════════════════╗\n" +
                                      "║  Enter the course you want to enroll the student in. ║\n" +
                                      "╚══════════════════════════════════════════════════════╝";
-        STUDENT_ADDED = "Student added correctly";
+        STUDENT_ADDED =
+        "╔════════════════════════════╗\n" +
+        "║  Student added correctly   ║\n" +
+        "╚════════════════════════════╝\n";
        // Profesores
         TEACHER_NAME = "Teacher's name: ";
         TEACHER_NAME_HEADLINER = "╔══════════════════════╗\n" +
@@ -55,7 +70,10 @@ public class Eng extends Lang{
         TEACHER_SUBJECT_HEADLINER = "╔════════════════════════════════════════════════════════╗\n" +
                                   "║  Enter the subject that the teacher is going to teach  ║\n" +
                                   "╚════════════════════════════════════════════════════════╝";
-        TEACHER_ADDED = "Teacher added correctly";
+        TEACHER_ADDED =
+        "╔════════════════════════════╗\n" +
+        "║  Teacher added correctly   ║\n" +
+        "╚════════════════════════════╝\n";
        // Cursos
         COURSE_NAME = "Course's name: ";
         COURSE_NAME_HEADLINER = "╔════════════════════════════════════════════════╗\n" +
@@ -77,7 +95,10 @@ public class Eng extends Lang{
         COURSE_TOPIC_HOURS_HEADLINER = "╔═══════════════════════════════════════════════════════╗\n" +
                                      "║ Enter the total hours that the subject will be taught ║\n" +
                                      "╚═══════════════════════════════════════════════════════╝";
-        COURSE_ADDED = "Course added correctly";
+        COURSE_ADDED =
+        "╔═══════════════════════════╗\n" +
+        "║  Course added correctly   ║\n" +
+        "╚═══════════════════════════╝\n";
 
        // Mostrar profesores
         SHOW_TEACHERS = "Hired professors";
@@ -116,53 +137,106 @@ public class Eng extends Lang{
         SHOW_COURSES_MENU_BOTTOM = "╚═══════════════════╝";
 
 
-        //Clase SchoolManager
-        STUDENT = " student";
-        HAS_ENROLLED_IN = " has enrolled in";
-        ENROLLED_STUDENTS = " These are the students in the course:";
-        NO_ENROLLED_STUDENTS = " No students enrolled.";     
-        NO_REGISTERED_COURSES = " No courses registered.";
-        COURSE = " Course";
-        TEACHER = " Teacher";
-        TOPIC = " Topic";
-        NOT_ASIGNATED = "Not assigned";
-        HOURS = "Hours";
-        CREDITS = "Credits";
-        NOT_REGISTERED_TEACHERS = "No teachers registered.";
-        REGISTERED_TEACHERS = "These are the registered teachers:";
-        THERE_NO_SUBJECTS_ASIGNATED_TO = "There are no subjects assigned to";
-        TOTAL_HOURS = "Total hours";
-        TOTAL_CREDITS = "Total credits";
-        NOT_REGISTERED_TOPICS = "No topics registered.";
-        ID = "ID";
-        NO_TEACHER_FOUND = "Teacher not found.";
-        THE_TEACHER = "The teacher";
-        NOT_ASIGNATED_SUBJECTS = "Has no assigned subjects.";
-        TEACHER_SALARY_CALCULATION = "Salary calculation for the teacher:";
-        TOTAL_SALARY = "Total salary: $";
-        HOURS_WITH_COMA = ", Hours: ";
-        PAY_PER_HOUR = ", Pay per hour: $";
-        SUBTOTAL = ", Subtotal: $";
+        //Nuevos de CLI
+        INVALID_SELECTION =
+        "╔══════════════════════╗\n" +
+        "║   Invalid selection  ║\n" +
+        "╚══════════════════════╝\n";
+        STUDENT_TO_ENROLL =
+        "╔═══════════════════════════════════════╗\n" +
+        "║ Select the student you want to enroll ║\n" +
+        "╚═══════════════════════════════════════╝\n";
+        NO_STUDENTS_ENROLLED =
+        "╔════════════════════════════════════════════════════════╗\n" +
+        "║ No students registered. Please register students first.║\n" +
+        "╚════════════════════════════════════════════════════════╝\n";
+        NO_AVAILABLE_STUDENTS =
+        "╔══════════════════════════════════════╗\n" +
+        "║ No more students available to enroll ║\n" +
+        "╚══════════════════════════════════════╝\n";
 
-        // Clase Topics
-        NAME_NULL_ERROR = "Name cannot be null";
-        ID_NULL_ERROR = "ID cannot be null";
-        CREDITS_NUMBER_ERROR = "Credits cannot be less than or equal to 0";
-        HOURS_NUMBER_ERROR = "Hours cannot be less than or equal to 0";
+        AVAILABLE_STUDENTS =
+        "╔═══════════════════════╗\n" +
+        "║   Available students  ║\n" +
+        "╚═══════════════════════╝\n";
+        SELECT_STUDENT = "Select a student (enter the number):";
+        CANCELING =
+        "╔════════════╗\n" +
+        "║ Canceling... ║\n" +
+        "╚════════════╝\n";
 
-        // Clase Teacher
-        PAYROLL_NULL_ERROR = "Payroll cannot be null";
-        SALARY_NUMBER_ERROR = "Salary cannot be less than or equal to 0";
-        PAYROLL_WITH_COLON = " Payroll: ";
-        TEACHER_WITH_COLON = " Teacher: ";
-        SALARY_WITH_COLON = " Salary: ";
-        TOPICS_WITH_COLON = " Topics: ";
+        NO_AVAILABLE_COURSES =
+        "╔════════════════════════╗\n" +
+        "║ No courses available   ║\n" +
+        "╚════════════════════════╝\n";
 
-        // Clase Student
-        AGE_NUMBER_ERROR = "Age cannot be less than or equal to 0";
-        STUDENT_WITH_COLON = "Student: ";
-        AGE_WITH_COLON = " Age: ";
-        ID_WITH_COLON = " ID: ";
+        NO_AVAILABLE_COURSES_TO_ENROLL =
+        "╔═════════════════════════════════════╗\n" +
+        "║ No more courses available to enroll ║\n" +
+        "╚═════════════════════════════════════╝\n";
+
+        AVAILABLE_COURSES =
+        "╔═══════════════════════╗\n" +
+        "║   Available courses   ║\n" +
+        "╚═══════════════════════╝\n";
+        SUBJECT_TO_ENROLL =
+        "╔════════════════════════════════════════════╗\n" +
+        "║ Select the subject you want to assign      ║\n" +
+        "╚════════════════════════════════════════════╝\n";
+
+        NO_SUBJECT_ENROLLED =
+        "╔════════════════════════════════════════════════════════╗\n" +
+        "║ No subjects registered. Please register subjects first.║\n" +
+        "╚════════════════════════════════════════════════════════╝\n";
+
+        NO_AVAILABLE_SUBJECTS =
+        "╔════════════════════════════════════════════╗\n" +
+        "║  No more subjects available to assign      ║\n" +
+        "╚════════════════════════════════════════════╝\n";
+        SUBJECT_ADDED =
+        "╔══════════════════════════╗\n" +
+        "║  Subject added correctly ║\n" +
+        "╚══════════════════════════╝";
+
+        AVAILABLE_SUBJECTS =
+        "╔═══════════════════════╗\n" +
+        "║  Available subjects   ║\n" +
+        "╚═══════════════════════╝\n";
+        SELECT_COURSE = "Select a course:";
+        SELECT_SUBJECT = "Select a subject (enter the number):";
+        NO_AVAILABLE_COURSE =
+        "╔════════════════════════╗\n" +
+        "║  No courses available  ║\n" +
+        "╚════════════════════════╝\n";
+        NO_AVAILABLE_COURSE_TO_ASSING =
+        "╔══════════════════════════════════════════════════════════╗\n" +
+        "║  No more courses available to assign subjects.           ║\n" +
+        "╚══════════════════════════════════════════════════════════╝\n";
+
+        NO_REGISTERED_COURSES =
+        "╔═══════════════════════════════════════════════════════╗\n" +
+        "║ No courses registered. Please register courses first. ║\n" +
+        "╚═══════════════════════════════════════════════════════╝\n";
+
+        TEACHER_TO_CALCULATE_SALARY =
+        "╔════════════════════════════════════════════════════════╗\n" +
+        "║ Select the teacher whose salary you want to calculate. ║\n" +
+        "╚════════════════════════════════════════════════════════╝\n";
+
+        NOT_REGISTERED_TEACHERS =
+        "╔═════════════════════════════════════════════════════════╗\n" +
+        "║ No teachers registered. Please register teachers first. ║\n" +
+        "╚═════════════════════════════════════════════════════════╝\n";
+        AVAILABLE_TEACHERS =
+        "╔════════════════════════╗\n" +
+        "║   Available teachers   ║\n" +
+        "╚════════════════════════╝\n";
+        SELECT_TEACHER = "Select a teacher (enter the number):";
+        COURSE_TO_CALCULATE_HOUR =
+        "╔══════════════════════════════════════════════════════════════════════╗\n" +
+        "║ Select the course for which you want to calculate hours and credits. ║\n" +
+        "╚══════════════════════════════════════════════════════════════════════╝\n";
+
 
     }
 

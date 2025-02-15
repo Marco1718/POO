@@ -11,17 +11,26 @@ public class Esp extends Lang{
         GOODBYE = "¡Hasta luego!";
         LANGUAGE_MENU_TOP = "\n╔══════════════════════════════════════════════╗\n║ El idioma actual de tu ordenador es: ";
         LANGUAGE_MENU_BOTTOM = "   ║\n║      ¿Te gustaría cambiar el idioma?         ║\n╠══════════════════════════════════════════════╣\n║                  1. Español                  ║\n║                  2. Ingles                   ║\n║                  3. Salir                    ║\n╚══════════════════════════════════════════════╝";
-        SHOW_MENU = "+------------------------------------------+\n" +
-        "|            Menú Principal               |\n" +
-        "+-----------------------------------------+\n" +
-        "| 1. Dar de alta a un alumno              |\n" +
-        "| 2. Dar de alta a un profesor            |\n" +
-        "| 3. Crear un curso                       |\n" +
-        "| 4. Mostrar profesores contratados       |\n" +
-        "| 5. Mostrar alumnos inscritos            |\n" +
-        "| 6. Mostrar cursos actuales              |\n" +
-        "| 7. Salir                                |\n" +
-        "+------------------------------------------+";
+        SHOW_MENU = 
+       "+-----------------------------------------------------+\n" +
+       "|            Menú Principal                           |\n" +
+       "+-----------------------------------------------------+\n" +
+       "| 1. Dar de alta a un alumno                          |\n" +
+       "| 2. Dar de alta a un profesor                        |\n" +
+       "| 3. Crear un curso vacio                             |\n" +
+       "| 4. Crear materias para un curso                     |\n" +
+       "| 5. Asignar un estudiante a un curso                 |\n" +
+       "| 6. Asignar materias a un curso vacio                |\n" +
+       "| 7. Mostrar estudiantes inscritos a un curso         |\n" +
+       "| 8. Mostrar Profesores de un curso                   |\n" +
+       "| 9. Registros de cursos creados                      |\n" +
+       "| 10. Registros de estudiantes inscritos              |\n" +
+       "| 11. Registros de profesores contratados             |\n" +
+       "| 12. Registros de materias impartidas                |\n" +
+       "| 13. Calcular salario de un profesor                 |\n" +
+       "| 14. Calcular horas y creditos de un curso           |\n" +
+       "| 15. Salir                                           |\n" +
+       "+-----------------------------------------------------+";
         STUDENT_NAME = "Nombre del alumno: ";
         STUDENT_NAME_HEADLINER =
         "╔══════════════════════════════════╗\n" +
@@ -70,6 +79,10 @@ public class Esp extends Lang{
         TEACHER_ADDED =
         "╔════════════════════════════════════════╗\n" +
         "║ Profesor añadido al sistema con éxito. ║\n" +
+        "╚════════════════════════════════════════╝";
+        SUBJECT_ADDED =
+        "╔════════════════════════════════════════╗\n" +
+        "║  Materia añadida al sistema con éxito. ║\n" +
         "╚════════════════════════════════════════╝";
         // Cursos
         COURSE_NAME_HEADLINER =
@@ -138,54 +151,119 @@ public class Esp extends Lang{
         SHOW_COURSES_MENU_HOURS = "║ Horas: ";
         SHOW_COURSES_MENU_BOTTOM = "╚═══════════════════╝";
 
+        SHOW_SUBJECTS_HEADLINER =
+        "╔═══════════════════╗\n" +
+        "║      Materias     ║\n" +
+        "╚═══════════════════╝\n" +
+        "╔═══════════════════╗";
+        SHOW_SUBJECTS_NAME = "║ Nombre: ";
+        SHOW_SUBJECTS_ID = "║ ID: ";
+        SHOW_SUBJECTS_CREDITS = "║ Créditos: ";
+        SHOW_SUBJECTS_HOURS = "║ Horas: ";
+        SHOW_SUBJECTS_BOTTOM = "╚═══════════════════╝";
 
-        // Clase Schoolmanager
-        STUDENT = "Estudiante";
-        HAS_ENROLLED_IN = "Se ha inscrito en";
-        ENROLLED_STUDENTS = "Estos son los estudiantes en el curso:";
-        NO_ENROLLED_STUDENTS = "No hay estudiantes inscritos.";
-        NO_REGISTERED_COURSES = "No hay cursos registrados.";
-        COURSE = "Curso";
-        TEACHER = "Profesor";
-        TOPIC = "Tema";
-        NOT_ASIGNATED = "No asignado";
-        HOURS = "Horas";
-        CREDITS = "Créditos";
-        NOT_REGISTERED_TEACHERS = "No hay profesores registrados.";
-        REGISTERED_TEACHERS = "Estos son los profesores registrados:";
-        THERE_NO_SUBJECTS_ASIGNATED_TO = "No hay materias asignadas a";
-        TOTAL_HOURS = "Total de horas";
-        TOTAL_CREDITS = "Total de créditos";
-        NOT_REGISTERED_TOPICS = "No hay temas registrados.";
-        ID = "ID";
-        NO_TEACHER_FOUND = "Profesor no encontrado.";
-        THE_TEACHER = "El profesor";
-        NOT_ASIGNATED_SUBJECTS = "No tiene materias asignadas.";
-        TEACHER_SALARY_CALCULATION = "Cálculo de salario para el profesor:";
-        TOTAL_SALARY = "Salario total: $";
-        HOURS_WITH_COMA = ", Horas: ";
-        PAY_PER_HOUR = ", Pago por hora: $";
-        SUBTOTAL = ", Subtotal: $";
-                
-        // Clase Topic
-        NAME_NULL_ERROR = "El nombre no puede ser nulo";
-        ID_NULL_ERROR = "El ID no puede ser nulo";
-        CREDITS_NUMBER_ERROR = "Los créditos no pueden ser menores o iguales a 0";
-        HOURS_NUMBER_ERROR = "Las horas no pueden ser menores o iguales a 0";
-              
-        // Clase Teacher
-        PAYROLL_NULL_ERROR = "La nómina no puede ser nula";
-        SALARY_NUMBER_ERROR = "El salario no puede ser menor o igual a 0";
-        PAYROLL_WITH_COLON = "Nómina: ";
-        TEACHER_WITH_COLON = "Profesor: ";
-        SALARY_WITH_COLON = "Salario: ";
-        TOPICS_WITH_COLON = "Temas: ";
-                
-        // Clase Student
-        AGE_NUMBER_ERROR = "La edad no puede ser menor o igual a 0";
-        STUDENT_WITH_COLON = "Estudiante: ";
-        AGE_WITH_COLON = "Edad: ";
-        ID_WITH_COLON = "ID: ";
+        //Nuevos de CLI
+        INVALID_SELECTION = 
+        "╔════════════════════╗\n" +
+        "║ Selección inválida ║\n" +
+        "╚════════════════════╝\n";
+        STUDENT_TO_ENROLL =
+        "╔════════════════════════════════════════════════════╗\n" +
+        "║  Selecciona el estudiante al que quieres inscribir ║\n" +
+        "╚════════════════════════════════════════════════════╝\n";
+        NO_STUDENTS_ENROLLED =
+        "╔═══════════════════════════════════════════════════════════════╗\n" +
+        "║ No hay estudiantes registrados. Registre estudiantes primero. ║\n" +
+        "╚═══════════════════════════════════════════════════════════════╝\n";
+
+        NO_AVAILABLE_STUDENTS =
+        "╔═══════════════════════════════════════════════════╗\n" +
+        "║ No hay más estudiantes disponibles para inscribir ║\n" +
+        "╚═══════════════════════════════════════════════════╝\n";
+
+        AVAILABLE_STUDENTS =
+        "╔═══════════════════════════╗\n" +
+        "║  Estudiantes disponibles  ║\n" +
+        "╚═══════════════════════════╝\n";
+
+        SELECT_STUDENT = "Seleccione un estudiante (ingrese el número):";
+        CANCELING =
+        "╔═══════════════╗\n" +
+        "║ Cancelando... ║\n" +
+        "╚═══════════════╝\n";
+
+        NO_AVAILABLE_COURSES =
+        "╔═══════════════════════════╗\n" +
+        "║ No hay cursos disponibles ║\n" +
+        "╚═══════════════════════════╝\n";
+
+        NO_AVAILABLE_COURSES_TO_ENROLL =
+        "╔═══════════════════════════════════════════════════╗\n" +
+        "║    No hay más cursos disponibles para inscribir   ║\n" +
+        "╚═══════════════════════════════════════════════════╝\n"; //cuadro
+        AVAILABLE_COURSES =
+        "╔══════════════════════╗\n" +
+        "║  Cursos disponibles  ║\n" +
+        "╚══════════════════════╝\n"; //cuadro
+        SUBJECT_TO_ENROLL =
+        "╔═══════════════════════════════════════════╗\n" +
+        "║ Selecciona la materia que quieres asignar ║\n" +
+        "╚═══════════════════════════════════════════╝\n";//cuadro
+        NO_SUBJECT_ENROLLED =
+        "╔═════════════════════════════════════════════════════════╗\n" +
+        "║ No hay materias registradas. Registre materias primero. ║\n" +
+        "╚═════════════════════════════════════════════════════════╝\n";
+//cuadro
+        NO_AVAILABLE_SUBJECTS =
+        "╔══════════════════════════════════════════════╗\n" +
+        "║ No hay más materias disponibles para asignar ║\n" +
+        "╚══════════════════════════════════════════════╝\n"; //cuadro
+        AVAILABLE_SUBJECTS =
+        "╔════════════════════════╗\n" +
+        "║  Materias disponibles  ║\n" +
+        "╚════════════════════════╝\n"; //cuadro
+        SELECT_COURSE = "Seleccione un curso:";
+        SELECT_SUBJECT = "Seleccione una materia (ingrese el número):";
+        NO_AVAILABLE_COURSE =
+        "╔═══════════════════════════╗\n" +
+        "║ No hay cursos disponibles ║\n" +
+        "╚═══════════════════════════╝\n";
+//cuadro
+        NO_AVAILABLE_COURSE_TO_ASSING =
+        "╔══════════════════════════════════════════════════════╗\n" +
+        "║ No hay más cursos disponibles para asignar materias. ║\n" +
+        "╚══════════════════════════════════════════════════════╝\n";
+//cuadro
+
+        NO_REGISTERED_COURSES =
+        "╔═════════════════════════════════════════════════════╗\n" +
+        "║ No hay cursos registrados. Registre cursos primero. ║\n" +
+        "╚═════════════════════════════════════════════════════╝\n";
+//cuadro
+        TEACHER_TO_CALCULATE_SALARY =
+        "╔════════════════════════════════════════════════════════════╗\n" +
+        "║ Selecciona el profesor al que quieres calcular el salario. ║\n" +
+        "╚════════════════════════════════════════════════════════════╝\n";
+        //cuadro
+        NOT_REGISTERED_TEACHERS =
+        "╔═════════════════════════════════════════════════════════════╗\n" +
+        "║ No hay profesores registrados. Registre profesores primero. ║\n" +
+        "╚═════════════════════════════════════════════════════════════╝\n";
+        //cuadro
+        AVAILABLE_TEACHERS =
+        "╔══════════════════════════╗\n" +
+        "║  Profesores disponibles  ║\n" +
+        "╚══════════════════════════╝\n";
+
+        SELECT_TEACHER = "Seleccione un profesor (ingrese el número):";
+        COURSE_TO_CALCULATE_HOUR =
+        "╔═══════════════════════════════════════════════════════════════╗\n" +
+        "║ Selecciona el curso al que quieres calcular horas y créditos. ║\n" +
+        "╚═══════════════════════════════════════════════════════════════╝\n";
+
+
+        
+
                 
     }
 

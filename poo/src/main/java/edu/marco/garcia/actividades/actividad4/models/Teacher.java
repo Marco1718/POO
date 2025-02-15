@@ -1,5 +1,4 @@
 package edu.marco.garcia.actividades.actividad4.models;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,14 +6,13 @@ public class Teacher {
     private String name;
     private String payroll;
     private Double salary;
-    private List<Topic> topics;
+    private List<Subject> subjects;
     private boolean isAvailable;
 
-    public Teacher(String name, Double salary, String payroll ) {
+    public Teacher(String name, String payroll ) {
         setName(name);
         setPayroll(payroll);
-        setSalary(salary);
-        this.topics = new ArrayList<>();
+        this.subjects = new ArrayList<>();
     }
     
     public String getName() {
@@ -50,16 +48,16 @@ public class Teacher {
         this.salary = salary;
     }
 
-    public List<Topic> getTopics() {
-        return topics;
+    public List<Subject> getSubjects() {
+        return subjects;
     }
 
-    public void addTopic(Topic topic) {
-        topics.add(topic);
+    public void addTopic(Subject subject) {
+        subjects.add(subject);
     }
 
     public String toString() {
-        return "Teacher: " + name + " Payroll: " + payroll + " Salary: " + salary + " Topics: " + topics;
+        return "Teacher: " + name + " Payroll: " + payroll + " Salary: " + salary + " Subjects: " + subjects;
     }
 
     public boolean getIsAvailable() {

@@ -11,7 +11,7 @@ public class Lang {
     public String LANGUAGE_MENU_BOTTOM;
     public String SHOW_MENU;
 
-    // Alumnos
+    // Estudiantes
     public String STUDENT_NAME;
     public String STUDENT_NAME_HEADLINER;
     public String STUDENT_ID;
@@ -27,10 +27,10 @@ public class Lang {
     public String TEACHER_NAME_HEADLINER;
     public String TEACHER_PAYROLL;
     public String TEACHER_PAYROLL_HEADLINER;
-    public String TEACHER_SALARY;
-    public String TEACHER_SALARY_HEADLINER;
-    public String TEACHER_SUBJECT;
-    public String TEACHER_SUBJECT_HEADLINER;
+    public String TEACHER_SALARY;//borrar
+    public String TEACHER_SALARY_HEADLINER;//borrar
+    public String TEACHER_SUBJECT;//borrar
+    public String TEACHER_SUBJECT_HEADLINER;//borrar
     public String TEACHER_ADDED;
 
     // Cursos
@@ -48,20 +48,20 @@ public class Lang {
 
     // Mostrar profesores
     public String SHOW_TEACHERS;
-    public String SHOW_TEACHERS_MENU;
+    public String SHOW_TEACHERS_MENU;//borrar
     public String SHOW_TEACHERS_MENU_NAME;
     public String SHOW_TEACHERS_MENU_PAYROLL;
-    public String SHOW_TEACHERS_MENU_SALARY;
-    public String SHOW_TEACHERS_MENU_SUBJECT;
+    public String SHOW_TEACHERS_MENU_SALARY;//borrar
+    public String SHOW_TEACHERS_MENU_SUBJECT;//borrar
     public String SHOW_TEACHERS_MENU_BOTTOM;
 
     // Mostrar alumnos
-    public String SHOW_STUDENTS;
+    public String SHOW_STUDENTS;//borrar
     public String SHOW_STUDENTS_MENU;
     public String SHOW_STUDENTS_MENU_NAME;
     public String SHOW_STUDENTS_MENU_ID;
     public String SHOW_STUDENTS_MENU_AGE;
-    public String SHOW_STUDENTS_MENU_ENROLLMENT;
+    public String SHOW_STUDENTS_MENU_ENROLLMENT;//borrar
     public String SHOW_STUDENTS_MENU_BOTTOM;
 
     // Mostrar cursos
@@ -73,53 +73,47 @@ public class Lang {
     public String SHOW_COURSES_MENU_HOURS;
     public String SHOW_COURSES_MENU_BOTTOM;
 
+    public String SHOW_SUBJECTS_HEADLINER;
+    public String SHOW_SUBJECTS_NAME;
+    public String SHOW_SUBJECTS_ID;
+    public String SHOW_SUBJECTS_CREDITS;
+    public String SHOW_SUBJECTS_HOURS;
+    public String SHOW_SUBJECTS_BOTTOM;
+
+
     //No asignados de SchoolManager
-    public String STUDENT; // estudiante
-    public String HAS_ENROLLED_IN; // se ha inscrito en 
-    public String ENROLLED_STUDENTS; // Estos son los estudiantes en el curso: 
-    public String NO_ENROLLED_STUDENTS; // No hay estudiantes inscritos.
-    public String NO_REGISTERED_COURSES; // No hay cursos registrados.
-    public String COURSE; // Curso
-    public String TEACHER; // Profesor
-    public String TOPIC; // tema
-    public String NOT_ASIGNATED; //No asignado
-    public String HOURS; // Horas
-    public String CREDITS; // créditos
-    public String NOT_REGISTERED_TEACHERS; // No hay profesores registrados.
-    public String REGISTERED_TEACHERS; // Estos son los profesores registrados: 
-    public String THERE_NO_SUBJECTS_ASIGNATED_TO; // No hay materias asignadas a 
-    public String TOTAL_HOURS; // Total de horas
-    public String TOTAL_CREDITS; // Total de créditos
-    public String NOT_REGISTERED_TOPICS; // No hay temas registrados.
-    public String ID; //ID
-    public String NO_TEACHER_FOUND; // Profesor no encontrado.
-    public String THE_TEACHER; // El profesor 
-    public String NOT_ASIGNATED_SUBJECTS; // no tiene materias asignadas.
-    public String TEACHER_SALARY_CALCULATION; // Cálculo de salario para el profesor: 
-    public String TOTAL_SALARY; // Salario total: $
-    public String HOURS_WITH_COMA; //, Horas: 
-    public String PAY_PER_HOUR; //, Pago por hora: $
-    public String SUBTOTAL; //, Subtotal: $
+    public String NO_REGISTERED_COURSES;
+    public String TEACHER_WITH_COLON;
+    public String NO_ENROLLED_STUDENTS;
+    public String NOT_REGISTERED_TOPICS;
 
-    //No asignados de Topic
-    public String NAME_NULL_ERROR; //Name cannot be null
-    public String ID_NULL_ERROR; //ID cannot be null
-    public String CREDITS_NUMBER_ERROR; //Credits cannot be less than or equal to 0
-    public String HOURS_NUMBER_ERROR; //Hours cannot be less than or equal to 0
+    //CLI
+    public String INVALID_SELECTION; //Seleccion invalida
+    public String STUDENT_TO_ENROLL;//Selecciona el estudiante al que quieres inscribir.
+    public String NO_STUDENTS_ENROLLED;// No hay estudiantes registrados. Registre estudiantes primero.
+    public String NO_AVAILABLE_STUDENTS;// No hay más estudiantes disponibles para inscribir.
+    public String AVAILABLE_STUDENTS;//\nEstudiantes disponibles:
+    public String SELECT_STUDENT;//Seleccione un estudiante (ingrese el número): 
+    public String CANCELING;// Cancelando...
+    public String NO_AVAILABLE_COURSES;// No hay cursos disponibles.
+    public String NO_AVAILABLE_COURSES_TO_ENROLL;// No hay más cursos disponibles para inscribir.
+    public String AVAILABLE_COURSES;//\nCursos disponibles:
+    public String SUBJECT_TO_ENROLL;//Selecciona la materia que quieres asignar.
+    public String NO_SUBJECT_ENROLLED;// No hay materias registradas. Registre materias primero.
+    public String NO_AVAILABLE_SUBJECTS;// No hay más materias disponibles para asignar.
+    public String AVAILABLE_SUBJECTS;//\nMaterias disponibles:
+    public String SELECT_COURSE;//Seleccione un curso: 
+    public String SELECT_SUBJECT;//Seleccione una materia (ingrese el número): 
+    public String NO_AVAILABLE_COURSE;// No hay cursos disponibles.
+    public String NO_AVAILABLE_COURSE_TO_ASSING;// No hay más cursos disponibles para asignar materias.
+    public String COURSE_TO_ASSING;// No hay cursos registrados. Registre cursos primero.
+    public String TEACHER_TO_CALCULATE_SALARY;//Selecciona el profesor al que quieres calcular el salario.
+    public String NOT_REGISTERED_TEACHERS;// No hay profesores registrados. Registre profesores primero.
+    public String AVAILABLE_TEACHERS;//\nProfesores disponibles:
+    public String SELECT_TEACHER;//Seleccione un profesor (ingrese el número): 
+    public String COURSE_TO_CALCULATE_HOUR;//Selecciona el curso al que quieres calcular horas y créditos.
+    public String SUBJECT_ADDED;//Materia añadido con éxito
 
-    //No asignados de Teacher
-    public String PAYROLL_NULL_ERROR; //Payroll cannot be null
-    public String SALARY_NUMBER_ERROR; //Salary cannot be less than or equal to 0
-    public String PAYROLL_WITH_COLON; // Payroll: 
-    public String TEACHER_WITH_COLON; // Teacher: 
-    public String SALARY_WITH_COLON; // Salary: 
-    public String TOPICS_WITH_COLON; // Topics: 
-
-    //No asignados de Student
-    public String AGE_NUMBER_ERROR; //Age cannot be less than or equal to 0
-    public String STUDENT_WITH_COLON; //Student: 
-    public String AGE_WITH_COLON; // Age: 
-    public String ID_WITH_COLON; // ID: 
 
 
 }
