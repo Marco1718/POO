@@ -20,7 +20,7 @@ public class Esp extends Lang{
        "+-----------------------------------------------------+\n" +
        "| 1. Dar de alta a un alumno                          |\n" +
        "| 2. Dar de alta a un profesor                        |\n" +
-       "| 3. Crear un curso vacio                             |\n" +
+       "| 3. Crear un curso vacio                             |\n" +    
        "| 4. Crear materias para un curso                     |\n" +
        "| 5. Asignar un estudiante a un curso                 |\n" +
        "| 6. Asignar materias a un curso vacio                |\n" +

@@ -139,6 +139,17 @@ public class Eng extends Lang{
         SHOW_COURSES_MENU_HOURS = "║ Hours: ";
         SHOW_COURSES_MENU_BOTTOM = "╚═══════════════════╝";
 
+        SHOW_SUBJECTS_HEADLINER =
+        "╔═══════════════════╗\n" +
+        "║      Subjects     ║\n" +
+        "╚═══════════════════╝\n" +
+        "╔═══════════════════╗";
+        SHOW_SUBJECTS_NAME = "║ Name: ";
+        SHOW_SUBJECTS_ID = "║ ID: ";
+        SHOW_SUBJECTS_CREDITS = "║ Credits: ";
+        SHOW_SUBJECTS_HOURS = "║ Hours: ";
+        SHOW_SUBJECTS_BOTTOM = "╚═══════════════════╝";
+
 
         //Nuevos de CLI
         INVALID_SELECTION =
