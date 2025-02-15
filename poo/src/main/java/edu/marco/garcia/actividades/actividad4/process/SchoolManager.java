@@ -11,7 +11,11 @@ import edu.marco.garcia.actividades.actividad4.models.Subject;
 import edu.marco.garcia.actividades.actividad4.models.Teacher;
 
 public class SchoolManager {
-
+    /**
+     * Mapa de cursos con sus materias asignadas
+     * Key: Course
+     * Value: List<Subject>
+     */
     public static Map<Course, List<Subject>> courseMap = new HashMap<>();
     public static Map<Teacher, List<Subject>> teacherMap = new HashMap<>();
     public static Map<Course, Teacher> courseTeacherMap = new HashMap<>();
@@ -19,58 +23,68 @@ public class SchoolManager {
     public static Map<Student, List<Student>> studentMap = new HashMap<>();
     public static Map<Subject, List<Subject>> subjectMap = new HashMap<>();
     public static List<Subject> subjectsP = new ArrayList<>();
-
+    /**
+     * Método para dar de alta un profesor
+     * @param teacher
+     */
     public static void enrollTeacher(Teacher teacher) {
         teacherMap.put(teacher, new ArrayList<>());
     }
-
+    /**
+     * Método para dar de alta un curso
+     * @param course
+     */
     public static void enrollCourse(Course course) {
         courseMap.put(course, new ArrayList<>());
     }
-
+    /**
+     * Método para dar de alta un estudiante
+     * @param student
+     */
     public static void enrollStudent(Student student) {
         studentMap.put(student, new ArrayList<>());
     }
-
+    /**
+     * Método para dar de alta una materia
+     * @param subject
+     */
     public static void enrollSubject(Subject subject) {
         subjectMap.put(subject, new ArrayList<>());
     }
-
-    public static void assignStudentToCourse( Student student, Course course) {
-        boolean isAlreadyEnrolled = false;
-        for (Map.Entry<Course, List<Student>> entry : studentCourseMap.entrySet()) {
-            if (entry.getValue().contains(student)) {
-                isAlreadyEnrolled = true;
-                break;
-            }
-        }
-        if (isAlreadyEnrolled) {
-            System.out.println("N" + student.getName() + " ya está inscrito en otro curso.");
+    /**
+     * Método para asignar un estudiante a un curso
+     * @param student
+     * @param course
+     */
+    public static void assignStudentToCourse(Student student, Course course) {
+        List<Subject> subjects = courseMap.get(course);
+        if (subjects == null || subjects.size() < 3) {
+            System.out.println(" Error: El curso " + course.getName() + " no tiene suficientes materias asignadas. Inscripción no permitida.");
             return;
         }
-
-        studentCourseMap.putIfAbsent(course, new ArrayList<>());
-        studentCourseMap.get(course).add(student);
-
-        List<Subject> subjects = courseMap.get(course);
-        if (subjects != null && !subjects.isEmpty()) {
-            for (Subject subject : subjects) {
-                subject.getStudents().add(student);
+        for (Map.Entry<Course, List<Student>> entry : studentCourseMap.entrySet()) {
+            if (entry.getValue().contains(student)) {
+                System.out.println(" Error: El estudiante " + student.getName() + " ya está inscrito en otro curso.");
+                return;
             }
-        } else {
-            System.out.println(" El curso " + course.getName() + " no tiene materias asignadas.");
         }
-
-        if(courseMap.get(course).size()<3){
-            throw new RuntimeException("El curso al que se quiere inscribir no tiene suficientes materias, vuelva mas tarde");
-        }
-        if (studentCourseMap.get(course).size() >=26) {
+        studentCourseMap.putIfAbsent(course, new ArrayList<>());
+        if (studentCourseMap.get(course).size() >= 26) {
             System.out.println(" Error: El curso " + course.getName() + " ya tiene 26 estudiantes inscritos. No se puede agregar más.");
-            return;   
+            return;
         }
+        studentCourseMap.get(course).add(student);
+        for (Subject subject : subjects) {
+            subject.getStudents().add(student);
+        }
+    
         System.out.println(" Estudiante " + student.getName() + " se ha inscrito en " + course.getName());
     }
-
+    /**
+     * Método para asignar una materia a un profesor
+     * @param subject
+     * @param teacher
+     */
     public static void assignSubjectToTeacher(Subject subject, Teacher teacher) {
         teacherMap.putIfAbsent(teacher, new ArrayList<>());
     
@@ -87,7 +101,11 @@ public class SchoolManager {
     
         System.out.println("La materia " + subject.getName() + " se ha asignado al profesor " + teacher.getName());
     }
-
+    /**
+     * Método para asignar una materia a un curso
+     * @param subject
+     * @param course
+     */
     public static void assignSubjectToCourse(Subject subject, Course course) {
         courseMap.putIfAbsent(course, new ArrayList<>());
         if (courseMap.get(course).size() >= 3) {
@@ -114,7 +132,10 @@ public class SchoolManager {
         course.addTeacher(assignedTeacher);
         System.out.println("La materia " + subject.getName() + " se ha agregado al curso " + course.getName());
     }
-    
+    /**
+     * Método para encontrar un profesor disponible y asignarle una materia automáticamente 
+     * @return
+     */
     private static Teacher findAvailableTeacher() {
         for (Map.Entry<Teacher, List<Subject>> entry : teacherMap.entrySet()) {
             if (entry.getValue().size() < 4) {
@@ -123,7 +144,10 @@ public class SchoolManager {
         }
         return null; 
     }
-
+    /**
+     * Método para mostrar los estudiantes en un curso
+     * @param course
+     */
     public static void showStudentsInCourse(Course course) {
         List<Student> students = studentCourseMap.get(course);
 
@@ -137,7 +161,10 @@ public class SchoolManager {
             System.out.println(" - " + student.getName());
         }
     }
-
+    /**
+     * Método para mostrar los estudiantes en un curso
+     * @param course
+     */
     public static void showTeachersInCourse(Course course) {
         List<Teacher> teachers = course.getTeachers();
     
@@ -151,7 +178,10 @@ public class SchoolManager {
             System.out.println("- " + teacher.getName());
         }
     }
-
+    /**
+     * Método para mostrar los estudiantes en un curso
+     * @param course
+     */
     public static void showSubjectsInTeacher(Teacher teacher) {
         List<Subject> subjects = teacherMap.get(teacher);
     
@@ -165,7 +195,10 @@ public class SchoolManager {
             System.out.println("- " + subject.getName());
         }
     }
-
+    /**
+     * Método para mostrar los estudiantes en un curso
+     * @param course
+     */
     public static void showSubjectsInCourse(Course course) {
         List<Subject> subjects = courseMap.get(course);
 
@@ -179,81 +212,10 @@ public class SchoolManager {
             System.out.println(" - " + subject.getName());
         }
     }
-    
-    public static void showCourses() {
-        if (courseMap.isEmpty()) {
-            System.out.println(" No hay cursos registrados.");
-            return;
-        }
-
-        for (Map.Entry<Course, List<Subject>> entry : courseMap.entrySet()) {
-            Course course = entry.getKey();
-            List<Subject> subjects = entry.getValue();
-            Teacher teacher = courseTeacherMap.get(course);
-
-            System.out.println("\n Curso: " + course.getName());
-            if (teacher != null) {
-                System.out.println(" Profesor: " + teacher.getName());
-            }
-
-            for (Subject subject : subjects) {
-                System.out.println(" - Materia: " + subject.getName() + ", Horas: " + subject.getHours() + ", Créditos: " + subject.getCredits());
-            }
-        }
-    }
-
-    public static void showTeachers() {
-        if (teacherMap.isEmpty()) {
-            System.out.println(" No hay profesores registrados.");
-            return;
-        }
-
-        for (Map.Entry<Teacher, List<Subject>> entry : teacherMap.entrySet()) {
-            Teacher teacher = entry.getKey();
-            List<Subject> subjects = entry.getValue();
-
-            System.out.println("\n Estos son los profesores registrados: " + teacher.getName() + ", Nómina: " + teacher.getPayroll());
-            for (Subject subject : subjects) {
-                System.out.println(" - Materia: " + subject.getName() + ", Horas: " + subject.getHours() + ", Créditos: " + subject.getCredits());
-            }
-        }
-    }
-
-    public static void showStudents() {
-        if (studentMap.isEmpty()) {
-            System.out.println(" No hay estudiantes registrados.");
-            return;
-        }
-        for (Map.Entry<Student, List<Student>> entry : studentMap.entrySet()) {
-            Student student = entry.getKey();
-            List<Student> students = entry.getValue();
-
-            System.out.println("\n Estudiantes registrados: " + student.getName()+ ", Edad: " + student.getAge() + ", Matricula: " + student.getId());
-            for (Student student1 : students) {
-                System.out.println(" - " + student1.getName());
-            }
-        }
-
-    }   
-    
-    public static void showSubjects() {
-        if (subjectMap.isEmpty()) {
-            System.out.println(" No hay materias registradas.");
-            return;
-        }
-
-        for (Map.Entry<Subject, List<Subject>> entry : subjectMap.entrySet()) {
-            Subject subject = entry.getKey();
-            List<Subject> subjects = entry.getValue();
-
-            System.out.println("\n Materias registradas: " + subject.getName()+ ", ID: " + subject.getId() + ", Créditos: " + subject.getCredits() + ", Horas: " + subject.getHours());
-            for (Subject subject1 : subjects) {
-                System.out.println(" - " + subject1.getName());
-            }
-        }
-        
-    }
-    
+    /**
+     * Método para calcular las horas y créditos de un curso
+     * @param course
+     */
     public static void calculateHoursAndCredits(Course course) {
         List<Subject> subjects = courseMap.get(course);
 
@@ -276,7 +238,10 @@ public class SchoolManager {
         System.out.println(" Total de horas: " + totalHours);
         System.out.println(" Total de créditos: " + totalCredits);
     }
-
+    /**
+     * Método para calcular el salario de un profesor
+     * @param teacher
+     */
     public static void calculateSalary(Teacher teacher) {
         if (!teacherMap.containsKey(teacher)) {
             System.out.println("Profesor no encontrado.");
@@ -316,7 +281,10 @@ public class SchoolManager {
         }
         System.out.println("Salario total: $" + totalSalary);
     }
-    
+    /**
+     * Método para cargar datos de prueba en la base de datos de la escuela
+     * @param course
+     */
     public static void dataBase(){
         Student student1 = new Student("Jose", 20, "1234");
         Student student2 = new Student("Juan", 21, "5678");

@@ -2,6 +2,9 @@ package edu.marco.garcia.actividades.actividad4.lang;
 
 public class Eng extends Lang{
     public Eng(){
+    /**
+     * Constructor de la clase Eng que inicializa los mensajes en inglés para la aplicación
+     */
         SELECT_AN_OPTION = "Select an option: ";
         INVALID_INPUT_EMPTY = "Invalid input. You can't leave the field empty.";
         INVALID_OPTION = "Invalid option. Please, enter a number from the menu.";
