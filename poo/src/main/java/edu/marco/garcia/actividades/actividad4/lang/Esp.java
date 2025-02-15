@@ -8,7 +8,10 @@ public class Esp extends Lang{
         INVALID_OPTION = "Opción inválida. Por favor, introduce un número del menú.";
         INVALID_INPUT_NOT_NUMBER = "Entrada inválida. Por favor, introduce un número.";
         INVALID_INPUT_NEGATIVE_NUMBER = "Entrada inválida. Por favor, introduce un número positivo.";
-        GOODBYE = "¡Hasta luego!";
+        GOODBYE =
+        "╔═══════════════╗\n" +
+        "║ ¡Hasta luego! ║\n" +
+        "╚═══════════════╝\n";
         LANGUAGE_MENU_TOP = "\n╔══════════════════════════════════════════════╗\n║ El idioma actual de tu ordenador es: ";
         LANGUAGE_MENU_BOTTOM = "   ║\n║      ¿Te gustaría cambiar el idioma?         ║\n╠══════════════════════════════════════════════╣\n║                  1. Español                  ║\n║                  2. Ingles                   ║\n║                  3. Salir                    ║\n╚══════════════════════════════════════════════╝";
         SHOW_MENU = 

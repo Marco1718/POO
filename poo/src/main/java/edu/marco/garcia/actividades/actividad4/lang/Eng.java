@@ -7,7 +7,10 @@ public class Eng extends Lang{
         INVALID_OPTION = "Invalid option. Please, enter a number from the menu.";
         INVALID_INPUT_NOT_NUMBER = "Invalid input. Please, enter a number.";
         INVALID_INPUT_NEGATIVE_NUMBER = "Invalid input. Please, enter a positive number.";
-        GOODBYE = "Goodbye!";
+        GOODBYE =
+        "╔══════════╗\n" +
+        "║ Goodbye! ║\n" +
+        "╚══════════╝\n";
         LANGUAGE_MENU_TOP = "\n╔══════════════════════════════════════════════╗\n║   Your system language is : ";
         LANGUAGE_MENU_BOTTOM = "           ║\n║   Would you like to change the language?     ║\n╠══════════════════════════════════════════════╣\n║                  1. Spanish                  ║\n║                  2. English                  ║\n║                  3. Exit                     ║\n╚══════════════════════════════════════════════╝";
         SHOW_MENU =        
