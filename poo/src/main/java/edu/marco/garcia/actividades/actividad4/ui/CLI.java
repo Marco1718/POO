@@ -19,7 +19,9 @@ import edu.marco.garcia.actividades.actividad4.process.SchoolManager;
 public class CLI {
     private static Lang lang;
     static SchoolManager schoolManager = new SchoolManager();
-
+        /**
+         * Método para seleccionar el idioma de la aplicación 
+         */
         public static void selectLang(){
         cleanScreen();
         Locale systemLocale = Locale.getDefault();
@@ -74,6 +76,9 @@ public class CLI {
         }
         
     }
+        /**
+         * Método para limpiar la consola de la aplicación
+         */
         public static void cleanScreen(){
             try {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
@@ -81,6 +86,9 @@ public class CLI {
                 System.out.println("Error al limpiar la consola.");
             }
         }
+    /**
+     * Método para ejecutar la aplicación de la escuela
+     */
     public static void runApp() {
         schoolManager.dataBase();
         Scanner scanner = new Scanner(System.in);
@@ -96,7 +104,7 @@ public class CLI {
                     showMenu();
                     continue;
                 }
-    
+                
                 try {
                     opcion = Integer.parseInt(input);
                     if (opcion < 1 || opcion > 15) {
@@ -112,7 +120,13 @@ public class CLI {
                     showMenu();
                 }
             }
+            /**
+             * Switch para seleccionar la opción del menú
+             */
             switch (opcion) {
+                /**
+                 * Caso para añadir un estudiantes a la escuela
+                 */
                 case 1:
                     System.out.println(lang.STUDENT_ID_HEADLINER);
                     String studentId;
@@ -162,7 +176,9 @@ public class CLI {
                     schoolManager.enrollStudent(student);
                     System.out.println(lang.STUDENT_ADDED);
                     break;
-
+                /**
+                 * Caso para añadir un profesor a la escuela
+                 */
                 case 2:
                     System.out.println(lang.TEACHER_NAME_HEADLINER);
                     String teacherName;
@@ -190,7 +206,9 @@ public class CLI {
                     schoolManager.enrollTeacher(teacher);
                     System.out.println(lang.TEACHER_ADDED);
                     break;
-
+                /**
+                 * Caso para añadir un curso a la escuela
+                 */
                 case 3:
                     System.out.println(lang.COURSE_NAME_HEADLINER);
                     String courseName;
@@ -207,7 +225,10 @@ public class CLI {
                     schoolManager.enrollCourse(course);
                     System.out.println(lang.COURSE_ADDED);
                     break;
-                case 4:   //crear una materia
+                /**
+                 * Caso para añadir una materia a la escuela
+                 */
+                case 4:   
                     System.out.println(lang.COURSE_TOPIC_NAME_HEADLINER);
                     String topicName;
                     while (true) {
@@ -273,12 +294,16 @@ public class CLI {
                         }
                     }
                     Subject subject = new Subject(topicName, topicId, topicCredits, topicHours);
-                    schoolManager.enrollSubject(subject);             
+                    schoolManager.enrollSubject(subject);
+                    System.out.println(lang.SUBJECT_ADDED);             
                     break;
-                case 5: //añadir estudiante a curso
-                System.out.println("Selecciona el estudiante al que quieres inscribir.");
+                /**
+                 * Caso para matricular un estudiante en un curso
+                 */
+                case 5: 
+                System.out.println(lang.STUDENT_TO_ENROLL);
                 if (schoolManager.studentMap.isEmpty()) {
-                    System.out.println(" No hay estudiantes registrados. Registre estudiantes primero.");
+                    System.out.println(lang.NO_STUDENTS_ENROLLED);
                     return;
                 }
                 while (true) {
@@ -286,248 +311,270 @@ public class CLI {
                     studentList.removeIf(student1 -> schoolManager.studentCourseMap.values().stream()
                             .anyMatch(list -> list.contains(student1)));
                     if (studentList.isEmpty()) {
-                        System.out.println(" No hay más estudiantes disponibles para inscribir.");
+                        System.out.println(lang.NO_AVAILABLE_STUDENTS);
                         return;
                     }
-                    System.out.println("\nEstudiantes disponibles:");
+                    System.out.println(lang.AVAILABLE_STUDENTS);
                     for (int i = 0; i < studentList.size(); i++) {
                         System.out.println((i + 1) + ". " + studentList.get(i).getName());
                     }
-                    System.out.print("Seleccione un estudiante (ingrese el número): ");
+                    
+                    System.out.print("\n"+lang.SELECT_STUDENT);
                     int studentIndex;
                     try {
                         studentIndex = Integer.parseInt(scanner.nextLine()) - 1;
                         if (studentIndex == -1) {
-                            System.out.println(" Cancelando inscripción...");
+                            System.out.println(lang.CANCELING);
                             return;
                         }
                         if (studentIndex < 0 || studentIndex >= studentList.size()) {
                             System.out.println(lang.INVALID_SELECTION);
                             continue;
                         }
-                        } catch (NumberFormatException e) {
-                        System.out.println(" Entrada inválida. Debe ingresar un número.");
+                    } catch (NumberFormatException e) {
+                        System.out.println(lang.INVALID_INPUT_NOT_NUMBER);
                         continue;
                     }
                     Student studentAvailable = studentList.get(studentIndex);
                     if (schoolManager.courseMap.isEmpty()) {
-                        System.out.println(" No hay cursos disponibles.");
+                        System.out.println(lang.NO_AVAILABLE_COURSE);
                         return;
                     }
                     while (true) {
                         List<Course> courseList = new ArrayList<>(schoolManager.courseMap.keySet());
                         courseList.removeIf(course1 -> schoolManager.studentCourseMap.getOrDefault(course1, new ArrayList<>()).size() >= 26);
                         if (courseList.isEmpty()) {
-                            System.out.println(" No hay más cursos disponibles para inscribir.");
+                            System.out.println(lang.NO_AVAILABLE_COURSES_TO_ENROLL);
                             return;
                         }
-                        System.out.println("\nCursos disponibles:");
+                        System.out.println(lang.AVAILABLE_COURSES);
                         for (int i = 0; i < courseList.size(); i++) {
                             System.out.println((i + 1) + ". " + courseList.get(i).getName());
                         }
-                        System.out.print("Seleccione un curso (ingrese el número): ");
+                        System.out.print("\n"+lang.SELECT_COURSE);
                         int courseIndex;
                         try {
                             courseIndex = Integer.parseInt(scanner.nextLine()) - 1;
                             if (courseIndex == -1) {
-                                System.out.println(" Cancelando inscripción...");
+                                System.out.println(lang.CANCELING);
                                 return;
                             }
                             if (courseIndex < 0 || courseIndex >= courseList.size()) {
-                                System.out.println(" Selección inválida.");
+                                System.out.println(lang.INVALID_SELECTION);
                                 continue;
                             }
                         } catch (NumberFormatException e) {
-                            System.out.println(" Entrada inválida. Debe ingresar un número.");
+                            System.out.println(lang.INVALID_INPUT_NOT_NUMBER);
                             continue;
                         }
                         Course courseAvailable = courseList.get(courseIndex);
-                        schoolManager.assignStudentToCourse(studentAvailable, courseAvailable);
+                        try {
+                            System.out.println();
+                            schoolManager.assignStudentToCourse(studentAvailable, courseAvailable);
+                            
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                            break;
+                        }
+                        
                         break;
                     }
+                    
                     break;
                 }
                 break;
-                case 6: //asignar materia a un curso
-                System.out.println("Selecciona la materia que quieres asignar.");
+                /**
+                 *  Caso para asignar una materia a un curso
+                 */
+                case 6: 
+                System.out.println(lang.SUBJECT_TO_ENROLL);
                 if (schoolManager.subjectMap.isEmpty()) {
-                    System.out.println(" No hay materias registradas. Registre materias primero.");
+                    System.out.println(lang.NO_SUBJECT_ENROLLED);
                     return;
                 }
                 while (true) {
                     List<Subject> subjectList = new ArrayList<>(schoolManager.subjectMap.keySet());
-                
-                    // Filtrar materias ya asignadas a cualquier curso
                     subjectList.removeIf(Subject -> schoolManager.courseMap.values().stream()
                             .anyMatch(subjects -> subjects.contains(Subject)));
                 
                     if (subjectList.isEmpty()) {
-                        System.out.println(" No hay más materias disponibles para asignar.");
+                        System.out.println(lang.NO_AVAILABLE_SUBJECTS);
                         return;
                     }
                 
-                    System.out.println("\nMaterias disponibles:");
+                    System.out.println(lang.AVAILABLE_SUBJECTS);
                     for (int i = 0; i < subjectList.size(); i++) {
                         System.out.println((i + 1) + ". " + subjectList.get(i).getName());
                     }
-                
-                    System.out.print("Seleccione una materia (ingrese el número): ");
+                    
+                    System.out.print("\n"+lang.SELECT_SUBJECT);
                     int subjectIndex1;
                     try {
                         subjectIndex1 = Integer.parseInt(scanner.nextLine()) - 1;
                         if (subjectIndex1 == -1) {
-                            System.out.println(" Cancelando asignación de materias...");
+                            System.out.println(lang.CANCELING);
                             return;
                         }
                         if (subjectIndex1 < 0 || subjectIndex1 >= subjectList.size()) {
-                            System.out.println(" Selección inválida.");
+                            System.out.println(lang.INVALID_SELECTION);
                             continue;
                         }
                     } catch (NumberFormatException e) {
-                        System.out.println(" Entrada inválida. Debe ingresar un número.");
+                        System.out.println(lang.INVALID_INPUT_NOT_NUMBER);
                         continue;
                     }
                     Subject subjectAvailable1 = subjectList.get(subjectIndex1);
                     if (schoolManager.courseMap.isEmpty()) {
-                        System.out.println(" No hay cursos disponibles.");
+                        System.out.println(lang.NO_AVAILABLE_COURSE);
                         return;
                     }
                     while (true) {
                         List<Course> courseListAvailable = new ArrayList<>(schoolManager.courseMap.keySet());
                         courseListAvailable.removeIf(course1 -> schoolManager.courseMap.get(course1).size() >= 3);
                         if (courseListAvailable.isEmpty()) {
-                            System.out.println(" No hay más cursos disponibles para asignar materias.");
+                            System.out.println(lang.NO_AVAILABLE_COURSE_TO_ASSING);
                             return;
                         }
-                        System.out.println("\nCursos disponibles:");
+                        System.out.println(lang.AVAILABLE_COURSES);
                         for (int i = 0; i < courseListAvailable.size(); i++) {
                             System.out.println((i + 1) + ". " + courseListAvailable.get(i).getName());
                         }
-                        System.out.print("Seleccione un curso (ingrese el número): ");
+                        System.out.print("\n"+lang.SELECT_COURSE);
                         int courseIndex1;
                         try {
                             courseIndex1 = Integer.parseInt(scanner.nextLine()) - 1;
                             if (courseIndex1 == -1) {
-                                System.out.println(" Cancelando asignación...");
+                                System.out.println(lang.CANCELING);
                                 return;
                             }
                             if (courseIndex1 < 0 || courseIndex1 >= courseListAvailable.size()) {
-                                System.out.println(" Selección inválida.");
+                                System.out.println(lang.INVALID_SELECTION);
                                 continue;
                             }
                         } catch (NumberFormatException e) {
-                            System.out.println(" Entrada inválida. Debe ingresar un número.");
+                            System.out.println(lang.INVALID_INPUT_NOT_NUMBER);
                             continue;
                         }
+                        System.out.println();
                         Course courseAvailable1 = courseListAvailable.get(courseIndex1);
                         schoolManager.assignSubjectToCourse(subjectAvailable1, courseAvailable1);
+                        System.out.println(lang.SUBJECT_ADDED);
+
                         break;
                     }
                     break;
                 }
                 break;
-                case 7: //Mostrar estudiantes en un curso
+                /**
+                 * Caso para mostrar los estudiantes en un curso
+                 */
+                case 7: 
                 if (schoolManager.courseMap.isEmpty()) {
-                    System.out.println(" No hay cursos registrados. Registre cursos primero.");
+                    System.out.println(lang.COURSE_TO_ASSING);
                     break;
                 }
-
-                // Mostrar los cursos
-                System.out.println("\nCursos disponibles:");
+                System.out.println(lang.AVAILABLE_COURSES);
                 List<Course> availCourseList = new ArrayList<>(schoolManager.courseMap.keySet());
                 for (int i = 0; i < availCourseList.size(); i++) {
                     System.out.println((i + 1) + ". " + availCourseList.get(i).getName());
                 }
-
-                // Seleccionar curso
-                System.out.print("\nSelecciona un curso: ");
+                System.out.print(lang.SELECT_COURSE);
                 int selectedCourseIndex;
                 try {
                     selectedCourseIndex = Integer.parseInt(scanner.nextLine()) - 1;
                     if (selectedCourseIndex < 0 || selectedCourseIndex >= availCourseList.size()) {
-                        System.out.println(" Seleccion invalida.");
+                        System.out.println(lang.INVALID_SELECTION);
                         break;
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println(" Entrada invalida. Debe ingresar un numero.");
+                    System.out.println(lang.INVALID_INPUT_NOT_NUMBER);
                     break;
                 }
-
-                // Mostrar los Estudiantes en el curso
                 Course selectedCourse = availCourseList.get(selectedCourseIndex);
                 schoolManager.showStudentsInCourse(selectedCourse);
                 break;
-                case 8: //Mostrar profesores en un curso
+                /**
+                 * Caso para mostrar los profesores en un curso
+                 */
+                case 8: 
                 if (schoolManager.courseMap.isEmpty()) {
-                    System.out.println(" No hay cursos registrados. Registre cursos primero.");
+                    System.out.println(lang.COURSE_TO_ASSING);
                     break;
                 }
-
-                // Mostrar los cursos
-                System.out.println("\nCursos disponibles:");
+                System.out.println(lang.AVAILABLE_COURSES);
                 List<Course> availCourseList1 = new ArrayList<>(schoolManager.courseMap.keySet());
                 for (int i = 0; i < availCourseList1.size(); i++) {
                     System.out.println((i + 1) + ". " + availCourseList1.get(i).getName());
                 }
-
-                // Seleccionar curso
-                System.out.print("\nSelecciona un curso: ");
+                System.out.print(lang.SELECT_COURSE);
                 int selectedCourseIndex1;
                 try {
                     selectedCourseIndex1 = Integer.parseInt(scanner.nextLine()) - 1;
                     if (selectedCourseIndex1 < 0 || selectedCourseIndex1 >= availCourseList1.size()) {
-                        System.out.println(" Seleccion invalida.");
+                        System.out.println(lang.INVALID_SELECTION);
                         break;
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println(" Entrada invalida. Debe ingresar un numero.");
+                    System.out.println(lang.INVALID_INPUT_NOT_NUMBER);
                     break;
                 }
-
-                // Mostrar los Profesores en el curso
                 Course selectedCourse1 = availCourseList1.get(selectedCourseIndex1);
                 schoolManager.showTeachersInCourse(selectedCourse1);
-
                     break;
-                case 9: //registro curso
+                /**
+                 * Caso para mostrar los cursos registrados en la escuela
+                 */
+                case 9: 
                     showCourses();
+                    System.out.println();
                     break;
-                case 10: //registro alumnos
+                /**
+                 * Caso para mostrar los estudiantes registrados en la escuela
+                 */
+                case 10: 
                     showStudents();
                     break;
-                case 11: //registro profesores
+                /**
+                 * Caso para mostrar los profesores registrados en la escuela
+                 */
+                case 11: 
                     showTeachers();
-
                     break;
-                case 12: //registro materias
+                /**
+                 * Caso para mostrar las materias registradas en la escuela
+                 */
+                case 12: 
                     showSubjects();
                     break;
-                case 13: //calcular salario de un profesor
-                    System.out.println("Selecciona el profesor al que quieres calcular el salario.");
+                /**
+                 * Caso para calcular el salario de un profesor
+                 */
+                case 13: 
+                    System.out.println(lang.TEACHER_TO_CALCULATE_SALARY);
                     if (schoolManager.teacherMap.isEmpty()) {
-                        System.out.println(" No hay profesores registrados. Registre profesores primero.");
+                        System.out.println(lang.NOT_REGISTERED_TEACHERS);
                         return;
                     }
                     while (true) {
                         List<Teacher> teacherList = new ArrayList<>(schoolManager.teacherMap.keySet());
-                        System.out.println("\nProfesores disponibles:");
+                        System.out.println(lang.AVAILABLE_TEACHERS);
                         for (int i = 0; i < teacherList.size(); i++) {
                             System.out.println((i + 1) + ". " + teacherList.get(i).getName());
                         }
-                        System.out.print("Seleccione un profesor (ingrese el número): ");
+                        System.out.print(lang.SELECT_TEACHER);
                         int teacherIndex;
                         try {
                             teacherIndex = Integer.parseInt(scanner.nextLine()) - 1;
                             if (teacherIndex == -1) {
-                                System.out.println(" Cancelando cálculo de salario...");
+                                System.out.println(lang.CANCELING);
                                 return;
                             }
                             if (teacherIndex < 0 || teacherIndex >= teacherList.size()) {
-                                System.out.println(" Selección inválida.");
+                                System.out.println(lang.INVALID_SELECTION);
                                 continue;
                             }
                         } catch (NumberFormatException e) {
-                            System.out.println(" Entrada inválida. Debe ingresar un número.");
+                            System.out.println(lang.INVALID_INPUT_NOT_NUMBER);
                             continue;
                         }
                         Teacher teacherAvailable = teacherList.get(teacherIndex);
@@ -535,32 +582,35 @@ public class CLI {
                         break;
                     }
                     break;
-                case 14: //calcular horarios y creditos del curso
-                    System.out.println("Selecciona el curso al que quieres calcular horas y créditos.");
+                /**
+                 * Caso para calcular el salario de un profesor
+                 */
+                case 14: 
+                    System.out.println(lang.COURSE_TO_CALCULATE_HOUR);
                     if (schoolManager.courseMap.isEmpty()) {
-                        System.out.println(" No hay cursos registrados. Registre cursos primero.");
+                        System.out.println(lang.COURSE_TO_ASSING);
                         return;
                     }
                     while (true) {
                         List<Course> courseList = new ArrayList<>(schoolManager.courseMap.keySet());
-                        System.out.println("\nCursos disponibles:");
+                        System.out.println(lang.AVAILABLE_COURSES);
                         for (int i = 0; i < courseList.size(); i++) {
                             System.out.println((i + 1) + ". " + courseList.get(i).getName());
                         }
-                        System.out.print("Seleccione un curso (ingrese el número): ");
+                        System.out.print(lang.SELECT_COURSE);
                         int courseIndex;
                         try {
                             courseIndex = Integer.parseInt(scanner.nextLine()) - 1;
                             if (courseIndex == -1) {
-                                System.out.println(" Cancelando cálculo de horas y créditos...");
+                                System.out.println(lang.CANCELING);
                                 return;
                             }
                             if (courseIndex < 0 || courseIndex >= courseList.size()) {
-                                System.out.println(" Selección inválida.");
+                                System.out.println(lang.INVALID_SELECTION);
                                 continue;
                             }
                         } catch (NumberFormatException e) {
-                            System.out.println(" Entrada inválida. Debe ingresar un número.");
+                            System.out.println(lang.INVALID_INPUT_NOT_NUMBER);
                             continue;
                         }
                         Course courseAvailable = courseList.get(courseIndex);
@@ -568,21 +618,26 @@ public class CLI {
                         break;
                     }
                     break;
-                case 15: //salir
+                /**
+                 * caso para salir de la aplicación
+                 */
+                case 15: 
                     System.out.println(lang.GOODBYE);
                     break;
-            
             }
-            
         }
     }
 
     
-    
+    /**
+     * Método para mostrar el menú de la aplicación en la consola
+     */
     public static void showMenu(){
         System.out.println(lang.SHOW_MENU);
     }
-
+    /**
+     * Método para mostrar los profesores registrados en la escuela
+     */
     public static void showTeachers() {
         if (schoolManager.teacherMap.isEmpty()) {
             System.out.println(lang.NOT_REGISTERED_TEACHERS);
@@ -594,11 +649,13 @@ public class CLI {
             System.out.println(lang.SHOW_TEACHERS_MENU);
             System.out.println(lang.SHOW_TEACHERS_MENU_NAME+ teacher.getName() + "\n"+ lang.SHOW_TEACHERS_MENU_PAYROLL+ teacher.getPayroll()+ "\n"+ lang.SHOW_TEACHERS_MENU_BOTTOM);
             for (Subject subject : subjects) {
-                System.out.println(" - Materia: " + subject.getName() + ", Horas: " + subject.getHours() + ", Créditos: " + subject.getCredits());
+                System.out.println(lang.SHOW_COURSES_MENU_NAME + subject.getName() + lang.SHOW_COURSES_MENU_HOURS + subject.getHours() + lang.SHOW_COURSES_MENU_CREDITS + subject.getCredits()+ lang.SHOW_COURSES_MENU_BOTTOM);
             }
         }
     }
-
+    /**
+     * Método para mostrar los cursos registrados en la escuela
+     */
     public static void showCourses() {
         if (schoolManager.courseMap.isEmpty()) {
             System.out.println(lang.NO_REGISTERED_COURSES);
@@ -620,7 +677,9 @@ public class CLI {
             }
         }
     }
-
+    /**
+     * Método para mostrar los estudiantes registrados en la escuela
+     */
     public static void showStudents() {
         if (schoolManager.studentMap.isEmpty()) {
             System.out.println(lang.NO_ENROLLED_STUDENTS);
@@ -637,7 +696,9 @@ public class CLI {
         }
 
     } 
-
+    /**
+     * Método para mostrar las materias registradas en la escuela
+     */
     public static void showSubjects() {
         if (schoolManager.subjectMap.isEmpty()) {
             System.out.println(lang.NOT_REGISTERED_TOPICS);

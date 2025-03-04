@@ -3,6 +3,9 @@ package edu.marco.garcia.actividades.actividad4.lang;
 public class Esp extends Lang{
 
     public Esp(){
+        /**
+        * Constructor de la clase Esp que inicializa los mensajes en español para la aplicación
+        */
         SELECT_AN_OPTION = "Selecciona una opción: ";
         INVALID_INPUT_EMPTY = "Entrada inválida. No puedes dejar el campo vacío.";
         INVALID_OPTION = "Opción inválida. Por favor, introduce un número del menú.";
