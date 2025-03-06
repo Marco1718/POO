@@ -450,7 +450,7 @@ public class CLI {
                                 }
                             }
                             
-                            System.out.println(Colores.dark_green+lang.book_entry_success+Colores.reset);
+                            System.out.println(Colores.green+lang.book_entry_success+Colores.reset);
                             boolean available = true;
                             if (bibliotecario.getBooks().containsKey(isbn)) {
                                 System.out.println(Colores.red+"El libro no se puede agregar porque tiene el mismo código único"+Colores.reset);
@@ -897,7 +897,7 @@ public class CLI {
                     * @return void
                     */
                     case 2:
-                        System.out.println(Colores.dark_blue+lang.book_borrow_name_prompt+Colores.reset);
+                        System.out.println(Colores.blue+lang.book_borrow_name_prompt+Colores.reset);
                         String bookName;
                         while (true) {
                             System.out.print(Colores.light_blue+lang.isbn+Colores.reset);
