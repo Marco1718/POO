@@ -1,5 +1,7 @@
 package edu.marco.garcia.actividades.proyecto.models;
-
+/**
+ * Clase que se encarga de gestionar los libros del sistema
+ */
 public class Book {
     private String title;
     private String author;
@@ -7,17 +9,29 @@ public class Book {
     private boolean available;
     private int year;
     private String genre;
+    private int popularity;
 
-    public Book(String title, String author, String isbn, boolean available, int year, String genre) {
+/**
+ * 
+ * @param title
+ * @param author
+ * @param isbn
+ * @param available
+ * @param year
+ * @param genre
+ * @param popularity
+ */
+    public Book(String title, String author, String isbn, boolean available, int year, String genre, int popularity) {
         setTitle(title);
         setAuthor(author);
         setIsbn(isbn);
         setAvailable(available);
         setYear(year);
         setGenre(genre);
+        setPopularity(popularity);
     }
 
-    public boolean available(){
+    public boolean isAvailable(){
         if(!available){
             available=false;
             return false;
@@ -37,64 +51,55 @@ public class Book {
         return title;
     }
 
-    public void setTitle(String title) {
-        if (title == null || title.trim().isEmpty()) {
-            throw new IllegalArgumentException("El título no puede estar vacío.");
-        }
-        this.title = title;
-    }
-
     public String getAuthor() {
         return author;
-    }
-
-    public void setAuthor(String author) {
-        if (author == null || author.trim().isEmpty()) {
-            throw new IllegalArgumentException("El autor no puede estar vacío.");
-        }
-        this.author = author;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        if (isbn == null || isbn.trim().isEmpty()) {
-            throw new IllegalArgumentException("El ISBN no puede estar vacío.");
-        }
-        this.isbn = isbn;
-    }
-
-    public boolean getAvailable() {
-        return available;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        if (year < 0 && year > 2025) {
-            throw new IllegalArgumentException("El año no puede ser negativo ni mayor a nuestro año actual, 2025.");            
-        }
-        this.year = year;
     }
 
     public String getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
-        if (genre == null || genre.trim().isEmpty()) {
-            throw new IllegalArgumentException("El género no puede estar vacío.");
-        }
-        this.genre = genre;
+    public int getPopularity() {
+        return popularity;
     }
 
+    public String getIsbn() {
+        return isbn;
+    }
 
+    public int getYear() {
+        return year;
+    }
+
+    public boolean getAvailable() {
+        return available;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    public void setPopularity(int popularity) {
+        this.popularity = popularity;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
 }

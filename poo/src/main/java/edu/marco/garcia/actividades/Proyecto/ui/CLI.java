@@ -3,28 +3,27 @@ package edu.marco.garcia.actividades.proyecto.ui;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
-
-import edu.marco.garcia.actividades.proyecto.models.Book;
-import edu.marco.garcia.actividades.proyecto.models.Users;
-import edu.marco.garcia.actividades.proyecto.process.BookManager;
-import edu.marco.garcia.actividades.proyecto.process.UserManager;
 import edu.marco.garcia.actividades.proyecto.ui.lang.Eng;
 import edu.marco.garcia.actividades.proyecto.ui.lang.Esp;
 import edu.marco.garcia.actividades.proyecto.ui.lang.Jap;
 import edu.marco.garcia.actividades.proyecto.ui.lang.Lang;
+import edu.marco.garcia.actividades.proyecto.models.Book;
+import edu.marco.garcia.actividades.proyecto.models.Users;
+import edu.marco.garcia.actividades.proyecto.process.Bibliotecario;
 
 /**    
  * Esta clase es la encargada de manejar la interfaz de usuario de la aplicación   
  */
 public class CLI {
-    static BookManager bookManager = new BookManager();
-    static UserManager userManager = new UserManager();
+    static Bibliotecario bibliotecario = new Bibliotecario();
     static Lang lang =new Lang();
+    static String usernameLogged;
     
-    
+        /**
+         * Método que se encarga de asignar el lenguaje con el que el usuario quiere correr la aplicación
+         */
         public static void selectLang(){
             cleanScreen();
             Locale systemLocale = Locale.getDefault();
@@ -56,6 +55,12 @@ public class CLI {
                 }
                 switch (opcion) {
                     case 1:
+                        try {
+                        new ProcessBuilder("cmd", "/c", "chcp 65001").inheritIO().start().waitFor();
+                        System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
+                        } catch (IOException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         cleanScreen();
                         lang= new Esp();
                         break;
@@ -79,11 +84,11 @@ public class CLI {
             }
             
         }
-                /**
-                 * Método que se encarga de correr la aplicación
-                 */
+        /**
+         * Método que se encarga de correr la aplicación
+         */        
     
-                public static void runApp() {
+        public static void runApp() {
                 Scanner scanner = new Scanner(System.in);
                 int opcion = -1; 
                 while (opcion !=3) {
@@ -145,10 +150,49 @@ public class CLI {
                                     break;
                                 }
                             }
-                            userManager.addUser(user, password);
+                            System.out.println(lang.enter_age);
+                            int age;
+                            while (true) {
+                                try {
+                                    System.out.print("Edad: ");
+                                    age = Integer.parseInt(scanner.nextLine());
+                                    if (age < 0) {
+                                        throw new IllegalArgumentException("La edad no puede ser negativa");
+                                    }
+                                    break;
+                                } catch (NumberFormatException e) {
+                                    System.out.println("Ingrese un número válido");
+                                } catch (IllegalArgumentException e) {
+                                    System.out.println(e.getMessage());
+                                }
+                            }
+                            System.out.println("Ingrese su nombre real");
+                            String name;
+                            while (true) {
+                                System.out.print("Nombre: ");
+                                name = scanner.nextLine().trim();
+                                if (name.isEmpty()) {
+                                    System.out.println("Ingrese un nombre válido");
+                                } else {
+                                    break;
+                                }
+                            }
+                            bibliotecario.addUser(user, password, age, name);
                             System.out.println(lang.registration_success);
-    
-                            UserMenu();
+                            usernameLogged = user;
+                            if (bibliotecario.getUsers().get(user).getTipo().equals("Usuario VIP")) {
+                                cleanScreen();
+                                userMenuVip();
+                            } else if (bibliotecario.getUsers().get(user).getTipo().equals("Usuario JR")) {
+                                cleanScreen();
+                                userMenuJr();
+                            } else if (bibliotecario.getUsers().get(user).getTipo().equals("Usuario teens")) {
+                                cleanScreen();
+                                userMenuTeens();
+                            } else{
+                                cleanScreen();
+                                userMenu();
+                            }
                             break;
                         /**
                         * Opción para iniciar sesión en la aplicación
@@ -156,7 +200,6 @@ public class CLI {
                         */
                         case 2:
                             System.out.println(lang.username_prompt);
-    
                             String registerUser;
                             while (true) {
                                 System.out.print(lang.username);
@@ -169,7 +212,6 @@ public class CLI {
                                 }
                             }
                             System.out.println(lang.password_prompt);
-    
                             String registerPassword;
                             while (true) {
                                 System.out.print(lang.password);
@@ -180,13 +222,29 @@ public class CLI {
                                     break;
                                 }
                             }
-                            if (userManager.validateUser(registerUser, registerPassword)) {
-                                if (userManager.isFirstUser(registerUser)) {
+                            if (bibliotecario.validateUserLoggin(registerUser, registerPassword)) {
+                                if (registerUser.equals("admin")) {
                                     System.out.println(lang.welcome_admin);
-                                    AdminMenu();
+                                    adminMenu();
                                 } else {
                                     System.out.println(lang.welcome_user + registerUser + lang.welcome_user_format);
-                                    UserMenu();
+                                    usernameLogged = registerUser;
+
+
+                                    if (bibliotecario.getUsers().get(registerUser).getTipo().equals("Usuario VIP")) {
+                                        cleanScreen();
+                                        userMenuVip();
+                                    } else if (bibliotecario.getUsers().get(registerUser).getTipo().equals("Usuario JR")) {
+                                        cleanScreen();
+                                        userMenuJr();
+                                    } else if (bibliotecario.getUsers().get(registerUser).getTipo().equals("Usuario teens")) {
+                                        cleanScreen();
+                                        userMenuTeens();
+                                    } else{
+                                        cleanScreen();
+                                        userMenu();
+                                    }
+                                    
                                 }
                             } else {
                                 System.out.println(lang.invalid_credentials);
@@ -197,42 +255,24 @@ public class CLI {
                         * @return void
                         */
                         case 3:
+                        cleanScreen();
                         System.out.println(lang.goodbye);
-    
                         break;
                 }
             }
-            
-    
-    
-    
         }
-    
-    
         /**
-        * Método que se encarga de mostrar la información de un libro  
-        * @param book
-        * @return void
-        */
+         * Metodo que se encarga de limpiar la consola
+         */
         public static void cleanScreen(){
             try {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } catch (IOException | InterruptedException ex) {
-                System.out.println("Error al limpiar la consola.");
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
             }
         }
-        public static void showBook(Book book) {
-            System.out.println("╔═══════════════════╗");
-            System.out.println("║      "+book.getTitle()+"     ║");
-            System.out.println("╚═══════════════════╝");
-            System.out.println("╔═══════════════════╗");
-            System.out.println("║ Autor: " + book.getAuthor() + "║");
-            System.out.println("║ ISBN: " + book.getIsbn() + "║");
-            System.out.println("║ Género: " + book.getGenre() + "║");
-            System.out.println("║ Año de publicación: " + book.getYear() + "║");
-            System.out.println("║ Disponibilidad: " + book.getAvailable() + " ║");
-            System.out.println("╚═══════════════════╝");
-        }
+
+        
         /**
         * Método que se encarga de mostrar la información de un usuario
         * @param user
@@ -242,6 +282,9 @@ public class CLI {
             System.out.println("╔═══════════════════╗");
             System.out.println("║ Usuario: " + user.getUsername() + "   ║");
             System.out.println("║ Contraseña: " + user.getPassword() + "   ║");
+            System.out.println("║ Edad: " + user.getAge() + "   ║");
+            System.out.println("║ Nombre: " + user.getName() + "   ║");
+            System.out.println("║ Tipo de usuario: " + user.getTipo() + "   ║");
             System.out.println("╚═══════════════════╝");
         }
     
@@ -252,18 +295,53 @@ public class CLI {
         public static void showMenu(){
             System.out.println(lang.menu_login);
         }
+
+        public static void showMenuJr(){
+            System.out.println("╔═══════════════════════════════╗");
+            System.out.println("║             Menú JR           ║");
+            System.out.println("╠═══════════════════════════════╣");
+            System.out.println("║ 1. Ver libros disponibles     ║");
+            System.out.println("║ 2. Salir                      ║");
+            System.out.println("╚═══════════════════════════════╝");
+        }
+
+        public static void showMenuTeens(){
+            System.out.println("╔═══════════════════════════════════════╗");
+            System.out.println("║               Menú Teens              ║");
+            System.out.println("╠═══════════════════════════════════════╣");
+            System.out.println("║ 1. Ver libros disponibles             ║");
+            System.out.println("║ 2. Solicitar préstamo de un libro     ║");
+            System.out.println("║ 3. Préstamos activos                  ║");
+            System.out.println("║ 4. Devolver un libro                  ║");
+            System.out.println("║ 5. Salir                              ║");
+            System.out.println("╚═══════════════════════════════════════╝");
+        }
+
+        public static void showMenuVip(){
+            System.out.println("╔═══════════════════════════════════════╗");
+            System.out.println("║               Menú VIP                ║");
+            System.out.println("╠═══════════════════════════════════════╣");
+            System.out.println("║ 1. Ver libros disponibles             ║");
+            System.out.println("║ 2. Solicitar préstamo de un libro     ║");
+            System.out.println("║ 3. Préstamos activos                  ║");
+            System.out.println("║ 4. Devolver un libro                  ║");
+            System.out.println("║ 5. Salir                              ║");
+            System.out.println("╚═══════════════════════════════════════╝");
+        }
+
+        public static void showAdminMenuAdvance(){
+        System.out.println(lang.menu_admin_advance);
+        }
+        
             /**
              * Método que se encarga de mostrar el menú de usuario
              * @return void
              */  
-        public static void AdminMenu(){
+        public static void adminMenu(){
                 Scanner scanner = new Scanner(System.in);
                 int option = -1;
-        
                 while (option != 5) {
                     System.out.println(lang.menu_admin);
-    
-        
                     System.out.print(lang.select_an_option);
                     String userInput = scanner.nextLine().trim();
         
@@ -280,18 +358,10 @@ public class CLI {
         
                     switch (option) {
                         /**
-                        * Opción para mostrar las personas registradas en el sistema
-                        * @return void
-                        */
-                        case 1:
-                            System.out.println(lang.registered_people);
-                            userManager.getUsers().forEach(CLI :: showUser);
-                            break;
-                        /**
                         * Opción para agregar un libro al catálogo
                         * @return void
                         */
-                        case 2:
+                        case 1:
                             System.out.println(lang.enter_book_title_prompt);
                             String title;
                             while (true) {
@@ -360,83 +430,111 @@ public class CLI {
                             
                             System.out.println(lang.book_entry_success);
                             boolean available = true;
-                            bookManager.addBook(title, author, isbn, available, year, genre);
-                            System.out.println(lang.book_added);
+                            if (bibliotecario.getBooks().containsKey(isbn)) {
+                                System.out.println("El libro no se puede agregar porque tiene el mismo código único");
+                                break;
+                            }else{
+                                bibliotecario.addBook(title, author, isbn, available, year, genre);
+                                System.out.println(lang.book_added);
+                            }
+                            
                             break;
                         /**
                         * Opción para mostrar los libros disponibles en el catálogo
                         * @return void
                         */
-                        case 3:
-                            System.out.println(lang.show_books_in_catalog_message);
-                            bookManager.getBooks().forEach(CLI::showBook);
-                            break;
                         /**
                         * Opción para mostrar los préstamos activos
                         * @return void
                         */
-                        case 4:
-                            System.out.println(lang.show_active_loans);
+                        case 2:
+                            bibliotecario.actualizarPrestamos();
+                            bibliotecario.addPrestamoVencido();
+                            System.out.println("");
+                            break;
+                        case 3:Se han actualizado los préstamos
+                            bibliotecario.mostrarPrestamosActivosAdministrador();
                             break;
                         /**
                         * Opción para salir del menú de administrador
                         * @return void
                         */
+                        case 4:
+                            adminAdvanceMenu();                       
+                            break;
                         case 5:
                             System.out.println(lang.exit_admin);
-                            break;
+                            break; 
                     }
                 }
         }
-        /**
-        * Método que se encarga de prestar un libro a un usuario           
-        * @param scanner
-        * @param loggedUser
-        */
-        private static void lendBook(Scanner scanner, String loggedUser){
-            String title = scanner.nextLine().trim();
-            boolean bookFound = false;
-            for(Book book: bookManager.getBooks()){
-                if (book.getTitle().equalsIgnoreCase(title) && book.getAvailable()){
-                    book.setAvailable(false);
-                    userManager.lendBookToUser(loggedUser, title);
-                    System.out.println(lang.book_borrow_success);
-                    bookFound =true;
+        public static void adminAdvanceMenu(){
+            Scanner scanner = new Scanner(System.in);
+            int option = -1;
+            while (option != 10) {
+                showAdminMenuAdvance();
+                System.out.print(lang.select_an_option);
+                String userInput = scanner.nextLine().trim();
+    
+                try {
+                    option = Integer.parseInt(userInput);
+                    if (option < 1 || option > 10) {
+                        System.out.println(lang.invalid_option);
+                        continue;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println(lang.invalid_input_not_number);
+                    continue;
+                }
+    
+                switch (option) {
+                    
+                    case 1:
+                    System.out.println(lang.registered_people);
+                    bibliotecario.getUsers().forEach((k, v) -> { showUser(v); });
+                    break;
+                    case 2:
+                    System.out.println(lang.show_books_in_catalog_message);
+                    bibliotecario.showBooksSorted();
+                    break;
+                    case 3:
+                    bibliotecario.mostrarPrestamosAdministrador();
+                    break;
+                    case 4:
+                    bibliotecario.mostrarLibrosMasPopulares();
+                    break;
+                    case 5:
+                    bibliotecario.mostrarLibrosMenosPopulares();
+                    break;
+                    case 6:
+                    bibliotecario.mostrarPrestamosVencidos();
+                    break;
+                    case 7:
+                    bibliotecario.mostrarUsuariosVencidos();
+                            break;
+                    case 8:
+                    bibliotecario.mostrarUsuariosMasVencidos();
+                            break;
+                    case 9:
+                    bibliotecario.mostrarUsuariosMasEntregados();
+                            break;
+                    case 10:
+                    System.out.println(lang.exit_admin);
                     break;
                 }
-            }
-            if (!bookFound) {
-                System.out.println(lang.book_not_available);
-            }
-        }
-        /**
-        * Método que se encarga de mostrar los libros que tiene un usuario prestados
-        * @param loggedUser
-        * @return void
-        */
-        private static void showActiveLoans(String loggedUser){
-            System.out.println(lang.no_active_loans_message);
-            ArrayList<String> borrowedBooks= userManager.getBorrowedBooks(loggedUser);
-            if (borrowedBooks.isEmpty()) {
-                System.out.println(lang.no_books_borrowed_message);
-            } else{
-                for(String bookTitle : borrowedBooks){
-                    System.out.println(bookTitle);
-                }
-            }
-            System.out.println(borrowedBooks);
+            }     
         }
         /**
         * Método que se encarga de mostrar el menú de usuario
         * @return void
         */
-        public static void UserMenu() {
+        public static void userMenu() {
             System.out.println(lang.menu_user);
         
             Scanner scanner = new Scanner(System.in);
             int option = -1;
         
-            while (option != 4) {
+            while (option != 5) {
                 System.out.print(lang.select_an_option);
                 String userInput = scanner.nextLine().trim();
         
@@ -447,7 +545,7 @@ public class CLI {
         
                 try {
                     option = Integer.parseInt(userInput);
-                    if (option < 1 || option > 4) {
+                    if (option < 1 || option > 5) {
                         System.out.println(lang.invalid_option);
                         continue;
                     }
@@ -463,41 +561,304 @@ public class CLI {
                     */
                     case 1:
                         System.out.println(lang.show_books_in_catalog_message);
-                        ArrayList<Book> books = bookManager.getBooks();
-                        for (Book book : books) {
-                            if (book.getAvailable()) {
-                                    showBook(book);
-                            }
-                        }
-    
+                        bibliotecario.showBooksAvailableSorted();
                         break;
+
                     /**
                     * Opción para solicitar el préstamo de un libro
                     * @return void
                     */
                     case 2:
                         System.out.println(lang.book_borrow_name_prompt);
-                        lendBook(scanner, userInput);
+                        String bookName;
+                        while (true) {
+                            System.out.print(lang.isbn);
+                            bookName = scanner.nextLine().trim();
+                            if (bookName.isEmpty()) {
+                                System.out.println(lang.invalid_title);
+                            } else {
+                                break;
+                            }
+                        }
+                        if (bibliotecario.addPrestamo(bookName, usernameLogged)) {
+                            System.out.println("Préstamo realizado con éxito ");
+                            System.out.println("El libro se ha prestado por 7 días por ser un adulto, recuerda devolverlo a tiempo");
+                        } 
                         break;
                     /**
                     * Opción para mostrar los préstamos activos
                     * @return void
                     */
                     case 3:
-                        showActiveLoans(userInput);
+                        bibliotecario.mostrarPrestamosActivos(usernameLogged);
                         break;
                     /**
                     * Opción para salir del menú de usuario
                     * @return void
                     */
                     case 4:
+                        System.out.println
+                        System.out.println("Ingrese el ISBN del libro que desea devolver");
+                        String isbn;
+                        while (true) {
+                            System.out.print("ISBN: ");
+                            isbn = scanner.nextLine().trim();
+                            if (isbn.isEmpty()) {
+                                System.out.println("Ingrese un ISBN válido");
+                            } else {
+                                break;
+                            }
+                        }
+                        bibliotecario.devolverLibro(isbn, usernameLogged);
+                        break;
+                    case 5:
                         System.out.println(lang.singning_out);
                         break;
                 }
-                if (option != 4) {
+                if (option != 5) {
                     System.out.println(lang.return_to_menu);
                     scanner.nextLine(); 
                     System.out.println(lang.menu_user);
+                }
+            }
+        }
+
+        public static void userMenuJr(){
+            showMenuJr();
+        
+            Scanner scanner = new Scanner(System.in);
+            int option = -1;
+        
+            while (option != 2) {
+                System.out.print(lang.select_an_option);
+                String userInput = scanner.nextLine().trim();
+        
+                if (userInput.isEmpty()) {
+                    System.out.println(lang.invalid_input_empty);
+                    continue; 
+                }
+        
+                try {
+                    option = Integer.parseInt(userInput);
+                    if (option < 1 || option > 2) {
+                        System.out.println(lang.invalid_option);
+                        continue;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println(lang.invalid_input_not_number);
+                    continue;
+                }
+        
+                switch (option) {
+                    /**
+                    * Opción para mostrar los libros disponibles en el catálogo
+                    * @return void
+                    */
+                    case 1:
+                        System.out.println(lang.show_books_in_catalog_message);
+                        bibliotecario.showBooksAvailableSorted();
+                        break;
+                    /**
+                    * Opción para salir del menú de usuario
+                    * @return void
+                    */
+                    case 2:
+                        System.out.println(lang.singning_out);
+                        break;
+                }
+                if (option != 2) {
+                    System.out.println(lang.return_to_menu);
+                    scanner.nextLine(); 
+                    showMenuJr();
+                }
+            }
+        }
+
+        public static void userMenuTeens(){
+            showMenuTeens();
+            Scanner scanner = new Scanner(System.in);
+            int option = -1;
+        
+            while (option != 5) {
+                System.out.print(lang.select_an_option);
+                String userInput = scanner.nextLine().trim();
+        
+                if (userInput.isEmpty()) {
+                    System.out.println(lang.invalid_input_empty);
+                    continue; 
+                }
+        
+                try {
+                    option = Integer.parseInt(userInput);
+                    if (option < 1 || option > 5) {
+                        System.out.println(lang.invalid_option);
+                        continue;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println(lang.invalid_input_not_number);
+                    continue;
+                }
+        
+                switch (option) {
+                    /**
+                    * Opción para mostrar los libros disponibles en el catálogo
+                    * @return void
+                    */
+                    case 1:
+                        System.out.println(lang.show_books_in_catalog_message);
+                        bibliotecario.showBooksAvailableSorted();
+                        break;
+
+                    /**
+                    * Opción para solicitar el préstamo de un libro
+                    * @return void
+                    */
+                    case 2:
+                        System.out.println(lang.book_borrow_name_prompt);
+                        String bookName;
+                        while (true) {
+                            System.out.print(lang.isbn);
+                            bookName = scanner.nextLine().trim();
+                            if (bookName.isEmpty()) {
+                                System.out.println(lang.invalid_title);
+                            } else {
+                                break;
+                            }
+                        }
+                        if (bibliotecario.addPrestamo(bookName, usernameLogged)) {
+                            System.out.println("Préstamo realizado con éxito");
+                            System.out.println("El libro se ha prestado por 7 días por ser usuario teens, recuerda devolverlo a tiempo");
+                        } 
+                        break;
+                    /**
+                    * Opción para mostrar los préstamos activos
+                    * @return void
+                    */
+                    case 3:
+                        bibliotecario.mostrarPrestamosActivos(usernameLogged);
+                        break;
+                    /**
+                    * Opción para salir del menú de usuario
+                    * @return void
+                    */
+                    case 4:
+                        System.out.println("Devolver libro");
+                        System.out.println("Ingrese el ISBN del libro que desea devolver");
+                        String isbn;
+                        while (true) {
+                            System.out.print("ISBN: ");
+                            isbn = scanner.nextLine().trim();
+                            if (isbn.isEmpty()) {
+                                System.out.println("Ingrese un ISBN válido");
+                            } else {
+                                break;
+                            }
+                        }
+                        bibliotecario.devolverLibro(isbn, usernameLogged);
+                        break;
+                    case 5:
+                        System.out.println(lang.singning_out);
+                        break;
+                }
+                if (option != 5) {
+                    System.out.println(lang.return_to_menu);
+                    scanner.nextLine(); 
+                    showMenuTeens();
+                }
+            }
+        }
+
+        public static void userMenuVip() {
+            showMenuVip();
+        
+            Scanner scanner = new Scanner(System.in);
+            int option = -1;
+        
+            while (option != 5) {
+                System.out.print(lang.select_an_option);
+                String userInput = scanner.nextLine().trim();
+        
+                if (userInput.isEmpty()) {
+                    System.out.println(lang.invalid_input_empty);
+                    continue; 
+                }
+        
+                try {
+                    option = Integer.parseInt(userInput);
+                    if (option < 1 || option > 5) {
+                        System.out.println(lang.invalid_option);
+                        continue;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println(lang.invalid_input_not_number);
+                    continue;
+                }
+        
+                switch (option) {
+                    /**
+                    * Opción para mostrar los libros disponibles en el catálogo
+                    * @return void
+                    */
+                    case 1:
+                        System.out.println(lang.show_books_in_catalog_message);
+                        bibliotecario.showBooksAvailableSorted();
+                        break;
+
+                    /**
+                    * Opción para solicitar el préstamo de un libro
+                    * @return void
+                    */
+                    case 2:
+                        System.out.println(lang.book_borrow_name_prompt);
+                        String bookName;
+                        while (true) {
+                            System.out.print(lang.isbn);
+                            bookName = scanner.nextLine().trim();
+                            if (bookName.isEmpty()) {
+                                System.out.println(lang.invalid_title);
+                            } else {
+                                break;
+                            }
+                        }
+                        if (bibliotecario.addPrestamo(bookName, usernameLogged)) {
+                            System.out.println("Préstamo realizado con éxito");
+                            System.out.println("El libro se ha prestado por 14 días por ser usuario VIP, recuerda devolverlo a tiempo");
+                        } 
+                        break;
+                    /**
+                    * Opción para mostrar los préstamos activos
+                    * @return void
+                    */
+                    case 3:
+                        bibliotecario.mostrarPrestamosActivos(usernameLogged);
+                        break;
+                    /**
+                    * Opción para salir del menú de usuario
+                    * @return void
+                    */
+                    case 4:
+                        System.out.println("Devolver libro");
+                        System.out.println("Ingrese el ISBN del libro que desea devolver");
+                        String isbn;
+                        while (true) {
+                            System.out.print("ISBN: ");
+                            isbn = scanner.nextLine().trim();
+                            if (isbn.isEmpty()) {
+                                System.out.println("Ingrese un ISBN válido");
+                            } else {
+                                break;
+                            }
+                        }
+                        bibliotecario.devolverLibro(isbn, usernameLogged);
+                        break;
+                    case 5:
+                        System.out.println(lang.singning_out);
+                        break;
+                }
+                if (option != 5) {
+                    System.out.println(lang.return_to_menu);
+                    scanner.nextLine(); 
+                    showMenuVip();
                 }
             }
         }
