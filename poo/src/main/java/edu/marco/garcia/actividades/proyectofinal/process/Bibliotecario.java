@@ -262,7 +262,7 @@ public class Bibliotecario {
                 break;
             case "Usuario adulto":
                 if (prestamosActuales >= 2) {
-                    System.out.println(Colores.dark_green+lang.overload_adult+Colores.reset);
+                    System.out.println(Colores.green+lang.overload_adult+Colores.reset);
                     return false;
                 }
                 break;
@@ -501,7 +501,7 @@ public class Bibliotecario {
             if (prestamo.getStatus().equals("Vencido")) {
                 String isbn = prestamo.getTitle();
                 String nombreLibro = books.containsKey(isbn) ? books.get(isbn).getTitle() : "Libro no encontrado";
-                System.out.println(Colores.dark_green+"\n"+ lang.user_more_returned   + prestamo.getUsername() +
+                System.out.println(Colores.green+"\n"+ lang.user_more_returned   + prestamo.getUsername() +
                                    "\n"+ lang.book_more_overdue  + nombreLibro +
                                    "\n"+lang.isbn_overdue_loans  + isbn +
                                    "\n"+ lang.return_date_overdue_loans  + prestamo.getFechaFin()+Colores.reset);
@@ -539,7 +539,7 @@ public class Bibliotecario {
  * Metodo que muestra una lista de honor de usuarios que tengan más prestamos entregados, una lista de usuarios organizados por la cantidad de prestamos entregados
  */
     public void mostrarUsuariosMasEntregados(){
-        System.out.println(Colores.dark_green+lang.users_with_more_returns+Colores.reset);
+        System.out.println(Colores.green+lang.users_with_more_returns+Colores.reset);
         List<Users> usuariosOrdenados = users.values().stream()
                 .filter(user -> user.getEntregados() > 0)
                 .sorted(Comparator.comparing(Users::getEntregados, Comparator.reverseOrder())
@@ -649,7 +649,7 @@ public class Bibliotecario {
             System.out.println(Colores.red+lang.no_books_on_library+Colores.reset);
         } else {
             for (Book book : librosOrdenados) {
-                System.out.println(Colores.dark_blue+"\n"+lang.title_more_popular + book.getTitle() +
+                System.out.println("\n"+lang.title_more_popular + book.getTitle() +
                                    "\n"+lang.author_more_popular + book.getAuthor() +
                                    "\n"+lang.isbn_overdue_loans + book.getIsbn() +
                                    "\n"+lang.times_more_popular + book.getPopularity()+Colores.reset);
@@ -674,7 +674,7 @@ public class Bibliotecario {
             if(prestamo.getStatus().equals("Vencido")){
                 fechaDevolucion = prestamo.getFechaFin();
             }
-            System.out.println(Colores.dark_green+"\n"+lang.book_alone + nombreLibro +
+            System.out.println(Colores.green+"\n"+lang.book_alone + nombreLibro +
                                "\n"+lang.isbn_overdue_loans + isbn +
                                "\n"+lang.user_overdue_loans + prestamo.getUsername() +
                                "\n"+lang.borrow_date_admin_loans + prestamo.getFechaInicio() +
